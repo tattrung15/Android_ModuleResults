@@ -131,6 +131,7 @@
             android:layout_marginBottom="10dp"
             android:background="@drawable/custom_btn_login"
             android:text="Đăng Nhập"
+            android:textColor="@color/white"
             android:textAllCaps="false"
             android:textSize="17sp" />
 

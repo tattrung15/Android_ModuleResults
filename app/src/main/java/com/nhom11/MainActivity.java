@@ -2,24 +2,40 @@ package com.nhom11;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 
+import com.nhom11.dashboard.Dashboard;
 import com.nhom11.database.MyDatabaseHelper;
 import com.nhom11.models.BaoCaoGiangDay;
 import com.nhom11.models.BaoCaoHocPhan;
 import com.nhom11.models.GiangVien;
 import com.nhom11.models.HocPhan;
 import com.nhom11.models.LopHoc;
+import com.nhom11.xem_ds_bao_cao_hoc_phan.XemDSBaoCaoHocPhan;
 
 public class MainActivity extends AppCompatActivity {
 
+    Button btnLogIn;
     MyDatabaseHelper databaseHelper = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        getWidget();
+
+        btnLogIn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, Dashboard.class);
+                startActivity(intent);
+            }
+        });
 
         databaseHelper = MyDatabaseHelper.getInstance(getApplicationContext());
 
@@ -71,5 +87,9 @@ public class MainActivity extends AppCompatActivity {
             databaseHelper.insertGiangVien(giangVien2);
             databaseHelper.insertGiangVien(giangVien3);
         }
+    }
+
+    private void getWidget() {
+        btnLogIn = findViewById(R.id.btnLogIn);
     }
 }
