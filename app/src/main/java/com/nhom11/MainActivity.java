@@ -7,6 +7,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import com.nhom11.dashboard.Dashboard;
 import com.nhom11.database.MyDatabaseHelper;
@@ -19,7 +22,9 @@ import com.nhom11.xem_ds_bao_cao_hoc_phan.XemDSBaoCaoHocPhan;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button btnLogIn;
+    Button btnLogin;
+    CheckBox ckbSaveAccount;
+    EditText editUsername, editPassword;
     MyDatabaseHelper databaseHelper = null;
 
     @Override
@@ -29,11 +34,16 @@ public class MainActivity extends AppCompatActivity {
 
         getWidget();
 
-        btnLogIn.setOnClickListener(new View.OnClickListener() {
+        btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, Dashboard.class);
-                startActivity(intent);
+//                if (databaseHelper.checkLogin(editUsername.getText().toString(),
+//                        editPassword.getText().toString())) {
+                    Intent intent = new Intent(MainActivity.this, Dashboard.class);
+                    startActivity(intent);
+//                } else {
+//                    Toast.makeText(getApplicationContext(), "Đăng nhập thất bại", Toast.LENGTH_SHORT).show();
+//                }
             }
         });
 
@@ -90,6 +100,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void getWidget() {
-        btnLogIn = findViewById(R.id.btnLogIn);
+        btnLogin = findViewById(R.id.btnLogin);
+        editUsername = findViewById(R.id.editUsername);
+        editPassword = findViewById(R.id.editPassword);
+        ckbSaveAccount = findViewById(R.id.ckbSaveAccount);
     }
 }

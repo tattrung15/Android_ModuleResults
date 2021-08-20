@@ -68,7 +68,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
             "CREATE TABLE IF NOT EXISTS " + TABLE_GIANG_VIEN + " (" +
                     MA_GV_COLUMN + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
                     TEN_GV_COLUMN + " TEXT NOT NULL," +
-                    USERNAME_COLUMN + " TEXT NOT NULL," +
+                    USERNAME_COLUMN + " TEXT UNIQUE NOT NULL," +
                     PASSWORD_COLUMN + " TEXT NOT NULL" +
                     ")";
 
@@ -160,6 +160,21 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         return totalRows;
     }
 
+    public boolean checkLogin(String username, String password) {
+        GiangVien giangVien = getGiangVienByUsername(username);
+
+        if (giangVien == null) {
+            return false;
+        }
+
+        if (giangVien.getUsername().compareTo(username) == 0 &&
+                giangVien.getPassword().compareTo(password) == 0) {
+            return true;
+        }
+
+        return false;
+    }
+
     // HocPhan
     public boolean insertHocPhan(HocPhan hocPhan) {
         SQLiteDatabase db = getWritableDatabase();
@@ -190,6 +205,26 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         }
 
         return rowId != -1;
+    }
+
+    public GiangVien getGiangVienByUsername(String username) {
+        SQLiteDatabase db = getReadableDatabase();
+        GiangVien giangVien = null;
+        Cursor cursor = db.query(TABLE_GIANG_VIEN, new String[]{MA_GV_COLUMN,
+                        TEN_GV_COLUMN, USERNAME_COLUMN, PASSWORD_COLUMN},
+                USERNAME_COLUMN + " = ?",
+                new String[]{username}, null, null, null);
+        if (cursor != null && cursor.moveToFirst()) {
+            giangVien = new GiangVien(cursor.getInt(0), cursor.getString(1),
+                    cursor.getString(2), cursor.getString(3));
+            cursor.close();
+        }
+
+        if (ENV.compareTo("DEV") != 0) {
+            db.close();
+        }
+
+        return giangVien;
     }
 
     // LopHoc
