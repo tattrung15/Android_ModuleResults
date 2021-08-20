@@ -2,24 +2,50 @@ package com.nhom11;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.Toast;
 
+import com.nhom11.dashboard.Dashboard;
 import com.nhom11.database.MyDatabaseHelper;
 import com.nhom11.models.BaoCaoGiangDay;
 import com.nhom11.models.BaoCaoHocPhan;
 import com.nhom11.models.GiangVien;
 import com.nhom11.models.HocPhan;
 import com.nhom11.models.LopHoc;
+import com.nhom11.xem_ds_bao_cao_hoc_phan.XemDSBaoCaoHocPhan;
 
 public class MainActivity extends AppCompatActivity {
 
+    Button btnLogin;
+    CheckBox ckbSaveAccount;
+    EditText editUsername, editPassword;
     MyDatabaseHelper databaseHelper = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        getWidget();
+
+        btnLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                if (databaseHelper.checkLogin(editUsername.getText().toString(),
+//                        editPassword.getText().toString())) {
+                    Intent intent = new Intent(MainActivity.this, Dashboard.class);
+                    startActivity(intent);
+//                } else {
+//                    Toast.makeText(getApplicationContext(), "Đăng nhập thất bại", Toast.LENGTH_SHORT).show();
+//                }
+            }
+        });
 
         databaseHelper = MyDatabaseHelper.getInstance(getApplicationContext());
 
@@ -71,5 +97,12 @@ public class MainActivity extends AppCompatActivity {
             databaseHelper.insertGiangVien(giangVien2);
             databaseHelper.insertGiangVien(giangVien3);
         }
+    }
+
+    private void getWidget() {
+        btnLogin = findViewById(R.id.btnLogin);
+        editUsername = findViewById(R.id.editUsername);
+        editPassword = findViewById(R.id.editPassword);
+        ckbSaveAccount = findViewById(R.id.ckbSaveAccount);
     }
 }
