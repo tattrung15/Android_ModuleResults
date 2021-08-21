@@ -9,7 +9,7 @@
     <TableRow
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:weightSum="3"
+        android:weightSum="4"
         android:orientation="vertical">
 
         <TextView
@@ -19,7 +19,7 @@
             android:textSize="16sp"
             android:textColor="#009688"
             android:layout_weight="1"
-            android:text="Mã lớp" />
+            android:text="Mã HP" />
 
         <TextView
             android:id="@+id/textView9"
@@ -28,7 +28,7 @@
             android:textSize="16sp"
             android:textColor="#009688"
             android:layout_weight="1"
-            android:text="Mã giảng viên" />
+            android:text="Tổng lớp" />
 
         <TextView
             android:id="@+id/textView"
@@ -37,16 +37,26 @@
             android:textSize="16sp"
             android:textColor="#009688"
             android:layout_weight="1"
-            android:text="Loại tiết" />
+            android:text="Tổng giờ" />
+
+        <TextView
+            android:id="@+id/textView12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:textColor="#009688"
+            android:layout_weight="1"
+            android:text="Loại HP" />
     </TableRow>
 
     <TableRow
         android:layout_width="match_parent"
         android:layout_height="34dp"
+        android:weightSum="4"
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/txtMaLop"
+            android:id="@+id/txtBCHP_MaHP"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -55,7 +65,7 @@
             android:textSize="16sp" />
 
         <TextView
-            android:id="@+id/txtMaGv"
+            android:id="@+id/txtBCHP_TongSoLop"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -64,13 +74,22 @@
             android:textSize="16sp" />
 
         <TextView
-            android:id="@+id/txtLoaiTiet"
+            android:id="@+id/txtBCHP_TongSoGio"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="TextView"
             android:textColor="@color/black"
             android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/txtBCHP_LoaiHP"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:text="TextView" />
     </TableRow>
 
 
