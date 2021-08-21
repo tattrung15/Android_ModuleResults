@@ -15,13 +15,20 @@ import com.nhom11.R;
 import com.nhom11.dto.BaoCaoHocPhanDTO;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class BaoCaoHocPhanAdapter extends ArrayAdapter<BaoCaoHocPhanDTO> {
-    BaoCaoHocPhanDTO[] listBcaoHphan = null;
+    BaoCaoHocPhanDTO[] bcaoHphanArray = null;
 
-    public BaoCaoHocPhanAdapter(@NonNull Context context, BaoCaoHocPhanDTO[] listBcaoHphan) {
-        super(context, R.layout.item_xem_ds_bcao_hphan, listBcaoHphan);
-        this.listBcaoHphan = listBcaoHphan;
+    public BaoCaoHocPhanAdapter(@NonNull Context context, BaoCaoHocPhanDTO[] bcaoHphanArray) {
+        super(context, R.layout.item_xem_ds_bcao_hphan, bcaoHphanArray);
+        this.bcaoHphanArray = bcaoHphanArray;
+    }
+
+    public BaoCaoHocPhanAdapter(@NonNull Context context, List<BaoCaoHocPhanDTO> listBcaoHphan) {
+        super(context, R.layout.item_xem_ds_bcao_hphan, listBcaoHphan.toArray(new BaoCaoHocPhanDTO[0]));
+        BaoCaoHocPhanDTO[] bcaoHphanArray = listBcaoHphan.toArray(new BaoCaoHocPhanDTO[0]);
+        this.bcaoHphanArray = bcaoHphanArray;
     }
 
 
@@ -36,7 +43,7 @@ public class BaoCaoHocPhanAdapter extends ArrayAdapter<BaoCaoHocPhanDTO> {
         TextView txtMaHphan = itemView.findViewById(R.id.txtMaHP_DSBCHPItem);
         TextView txtSoLop = itemView.findViewById(R.id.txtSoLop_DSBCHPItem);
 
-        BaoCaoHocPhanDTO bcaoHphan = listBcaoHphan[position];
+        BaoCaoHocPhanDTO bcaoHphan = bcaoHphanArray[position];
         txtTenHphan.setText(bcaoHphan.getTenHocPhan());
         txtMaHphan.setText(bcaoHphan.getMaHocPhan());
         txtSoLop.setText(String.valueOf(bcaoHphan.getTongSoLop()));

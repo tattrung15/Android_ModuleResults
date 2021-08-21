@@ -12,6 +12,7 @@ import com.nhom11.models.HocPhan;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.List;
 
 public class XemDSBaoCaoHocPhan extends AppCompatActivity {
     MaterialToolbar topAppBar = null;
@@ -45,7 +46,7 @@ public class XemDSBaoCaoHocPhan extends AppCompatActivity {
     protected void fakeListViewData() {
         try {
             listView = (ListView) findViewById(R.id.listView_DSBCHP);
-            adapter = new BaoCaoHocPhanAdapter(this, this.generateFakeBcaoHphan());
+            adapter = new BaoCaoHocPhanAdapter(this, this.generateFakeBcaoHphanList());
             listView.setAdapter(adapter);
         } catch (Exception e) {
             System.out.println(e.toString());
@@ -65,5 +66,19 @@ public class XemDSBaoCaoHocPhan extends AppCompatActivity {
         }
 
         return baoCaoHocPhans;
+    }
+
+    protected List<BaoCaoHocPhanDTO> generateFakeBcaoHphanList() throws Exception {
+        List<BaoCaoHocPhanDTO> list = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            BaoCaoHocPhanDTO bcaoHocPhan = new BaoCaoHocPhanDTO();
+            bcaoHocPhan.setTongSoLop(i + 10);
+            bcaoHocPhan.setMaHocPhan("MaHocPhan " + i);
+            bcaoHocPhan.setTenHocPhan("TenHocPhan " + i);
+
+            list.add(bcaoHocPhan);
+        }
+
+        return list;
     }
 }
