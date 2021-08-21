@@ -3,6 +3,7 @@ package com.nhom11;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -18,41 +19,69 @@ import com.nhom11.models.BaoCaoHocPhan;
 import com.nhom11.models.GiangVien;
 import com.nhom11.models.HocPhan;
 import com.nhom11.models.LopHoc;
-import com.nhom11.xem_ds_bao_cao_hoc_phan.XemDSBaoCaoHocPhan;
 
 public class MainActivity extends AppCompatActivity {
 
+    SharedPreferences sharedPreferences = null;
     Button btnLogin;
     CheckBox ckbSaveAccount;
     EditText editUsername, editPassword;
     MyDatabaseHelper databaseHelper = null;
 
+    String usernamePref, passwordPref, saveAccountPref;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        getWidget();
-
-        btnLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-//                if (databaseHelper.checkLogin(editUsername.getText().toString(),
-//                        editPassword.getText().toString())) {
-                    Intent intent = new Intent(MainActivity.this, Dashboard.class);
-                    startActivity(intent);
-//                } else {
-//                    Toast.makeText(getApplicationContext(), "Đăng nhập thất bại", Toast.LENGTH_SHORT).show();
-//                }
-            }
-        });
+        sharedPreferences = getSharedPreferences("auth", MODE_PRIVATE);
 
         databaseHelper = MyDatabaseHelper.getInstance(getApplicationContext());
+
+        getWidget();
 
         initHocPhan();
         initGiangVien();
 
 //        initDataDemo();
+
+        usernamePref = sharedPreferences.getString("username", "");
+        passwordPref = sharedPreferences.getString("password", "");
+        saveAccountPref = sharedPreferences.getString("saveAccount", "");
+
+        editUsername.setText(usernamePref);
+        editPassword.setText(passwordPref);
+        ckbSaveAccount.setChecked(Boolean.parseBoolean(saveAccountPref));
+
+        btnLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                GiangVien giangVien = login(editUsername.getText().toString(),
+                        editPassword.getText().toString());
+
+                if (giangVien != null) {
+                    Intent intent = new Intent(MainActivity.this, Dashboard.class);
+                    intent.putExtra("giangVien", giangVien);
+                    startActivity(intent);
+
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString("saveAccount", String.valueOf(ckbSaveAccount.isChecked()));
+                    if (ckbSaveAccount.isChecked()) {
+                        editor.putString("username", giangVien.getUsername());
+                        editor.putString("password", giangVien.getPassword());
+                    } else {
+                        editor.putString("username", "");
+                        editor.putString("password", "");
+                        editUsername.setText("");
+                        editPassword.setText("");
+                    }
+                    editor.apply();
+
+                } else {
+                    Toast.makeText(getApplicationContext(), "Đăng nhập thất bại", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
     private void initDataDemo() {
@@ -97,6 +126,21 @@ public class MainActivity extends AppCompatActivity {
             databaseHelper.insertGiangVien(giangVien2);
             databaseHelper.insertGiangVien(giangVien3);
         }
+    }
+
+    public GiangVien login(String username, String password) {
+        GiangVien giangVien = databaseHelper.getGiangVienByUsername(username);
+
+        if (giangVien == null) {
+            return null;
+        }
+
+        if (giangVien.getUsername().compareTo(username) == 0 &&
+                giangVien.getPassword().compareTo(password) == 0) {
+            return giangVien;
+        }
+
+        return null;
     }
 
     private void getWidget() {
