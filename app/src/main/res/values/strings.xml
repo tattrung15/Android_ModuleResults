@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">ModuleResults</string>
-    <string name="xem_ds_bcao_hphan">Xem danh sách báo cáo học phần</string>
+    <string name="xem_ds_bcao_hphan">Danh sách báo cáo học phần</string>
+    <string name="xem_ds_bcao_hphan_hint">Hint: Click vào thẻ để xem chi tiết</string>
 </resources>
