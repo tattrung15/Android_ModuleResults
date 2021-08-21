@@ -29,7 +29,7 @@ public class ChiTietBaoCaoHocPhan extends AppCompatActivity {
         setContentView(R.layout.activity_chi_tiet_bao_cao_hoc_phan);
         init();
         baoCaoHocPhan1 = new BaoCaoHocPhan(1,"IT01",3,4,"Lý thuyết");
-        baoCaoHocPhan1 =new BaoCaoHocPhan(1,"IT01",3,4,"Thực hành");
+        baoCaoHocPhan2 =new BaoCaoHocPhan(2,"IT02",3,4,"Thực hành");
         hp1 = new HocPhan("IT01","Android");
         hp2 = new HocPhan("IT02","PHP");
         //1. Tạo ArrayList object

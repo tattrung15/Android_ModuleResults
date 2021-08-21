@@ -32,6 +32,7 @@ public class CustomListview extends ArrayAdapter {
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         LayoutInflater inflater = context.getLayoutInflater();
         convertView = inflater.inflate(layoutID,null);
+
         if (list.size() > 0) {
             //lấy dòng thứ i
             final TextView txtBCHP_MaHP =convertView.findViewById(R.id.txtBCHP_MaHP);
