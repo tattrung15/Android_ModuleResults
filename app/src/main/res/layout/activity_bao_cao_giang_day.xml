@@ -20,7 +20,7 @@
             app:menu="@menu/xem_ds_bcao_hphan_menu"
             app:navigationIcon="@drawable/ic_go_back"
             app:navigationIconTint="@color/white"
-            app:title="@string/xem_ds_bcao_hphan" />
+            app:title="Báo cáo giảng dạy" />
 
     </com.google.android.material.appbar.AppBarLayout>
 

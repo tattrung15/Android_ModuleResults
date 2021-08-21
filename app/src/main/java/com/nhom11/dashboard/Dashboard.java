@@ -9,6 +9,8 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.nhom11.R;
+import com.nhom11.bao_cao_giang_day.BaoCaoGiangDayActivity;
+import com.nhom11.models.BaoCaoGiangDay;
 import com.nhom11.models.GiangVien;
 import com.nhom11.xem_ds_bao_cao_hoc_phan.XemDSBaoCaoHocPhan;
 
@@ -37,6 +39,22 @@ public class Dashboard extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(Dashboard.this, XemDSBaoCaoHocPhan.class);
+                startActivity(intent);
+            }
+        });
+
+        btnXemBaoCaoGD.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Dashboard.this, BaoCaoGiangDayActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        btnNhapBaoCaoGD.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Dashboard.this, BaoCaoGiangDayActivity.class);
                 startActivity(intent);
             }
         });
