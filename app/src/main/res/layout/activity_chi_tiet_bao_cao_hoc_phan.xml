@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".xem_ds_bao_cao_hoc_phan.XemDSBaoCaoHocPhan"
+    tools:context=".ds_bao_cao_hoc_phan.DSBaoCaoHocPhan"
     android:orientation="vertical">
 
     <com.google.android.material.appbar.AppBarLayout

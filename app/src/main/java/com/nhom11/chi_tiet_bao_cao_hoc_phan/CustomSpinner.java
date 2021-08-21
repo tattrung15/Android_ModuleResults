@@ -11,10 +11,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.nhom11.R;
-import com.nhom11.models.BaoCaoGiangDay;
 
 import java.util.ArrayList;
 import com.nhom11.models.HocPhan;
+
 public class CustomSpinner extends ArrayAdapter {
     Activity context = null;
     int layoutID;

@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -43,8 +42,7 @@ public class MainActivity extends AppCompatActivity {
         initHocPhan();
         initGiangVien();
         initLopHoc();
-
-//        initDataDemo();
+        initDataBaoCaoDemo();
 
         usernamePref = sharedPreferences.getString("username", "");
         passwordPref = sharedPreferences.getString("password", "");
@@ -85,18 +83,24 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void initDataDemo() {
-        BaoCaoHocPhan baoCaoHocPhan = new BaoCaoHocPhan(1, "IT6029",
-                5, 4, "Tự chọn");
-        databaseHelper.insertBaoCaoHocPhan(baoCaoHocPhan);
+    private void initDataBaoCaoDemo() {
+        if (databaseHelper.getTotalRecord(MyDatabaseHelper.TABLE_BAO_CAO_HOC_PHAN) == 0) {
+            BaoCaoHocPhan baoCaoHocPhan1 = new BaoCaoHocPhan(1, "IT6029",
+                    5, 4, "Tự chọn");
+            BaoCaoHocPhan baoCaoHocPhan2 = new BaoCaoHocPhan(1, "IT6030",
+                    3, 8, "Tự chọn");
+            databaseHelper.insertBaoCaoHocPhan(baoCaoHocPhan1);
+            databaseHelper.insertBaoCaoHocPhan(baoCaoHocPhan2);
 
-        BaoCaoGiangDay baoCaoGiangDay = new BaoCaoGiangDay(1, 1,
-                1, 1, 7, 8,
-                8, "Lý thuyết");
-
-        BaoCaoGiangDay baoCaoGiangDay1 = databaseHelper.insertBaoCaoGiangDay(baoCaoGiangDay);
-
-        Log.e("------------------", baoCaoGiangDay1.toString());
+            BaoCaoGiangDay baoCaoGiangDay1 = new BaoCaoGiangDay(1, 1,
+                    1, 1, 7, 8,
+                    8, "Lý thuyết");
+            BaoCaoGiangDay baoCaoGiangDay2 = new BaoCaoGiangDay(2, 3,
+                    2, 3, 2, 5,
+                    8, "Lý thuyết");
+            databaseHelper.insertBaoCaoGiangDay(baoCaoGiangDay1);
+            databaseHelper.insertBaoCaoGiangDay(baoCaoGiangDay2);
+        }
     }
 
     private void initHocPhan() {
