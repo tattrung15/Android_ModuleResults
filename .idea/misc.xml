@@ -12,6 +12,7 @@
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.35833333333333334" />
         <entry key="app/src/main/res/layout/activity_xem_danh_sach_bao_cao_hoc_phan.xml" value="0.35833333333333334" />
         <entry key="app/src/main/res/layout/activity_xem_ds_bao_cao_hoc_phan.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/item_xem_ds_bcao_hphan.xml" value="0.35833333333333334" />
         <entry key="app/src/main/res/menu/xem_ds_bcao_hphan_menu.xml" value="0.35833333333333334" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.37447916666666664" />
       </map>
