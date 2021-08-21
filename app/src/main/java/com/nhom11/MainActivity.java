@@ -2,9 +2,17 @@ package com.nhom11;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.Toast;
 
+import com.nhom11.dashboard.Dashboard;
 import com.nhom11.database.MyDatabaseHelper;
 import com.nhom11.models.BaoCaoGiangDay;
 import com.nhom11.models.BaoCaoHocPhan;
@@ -14,26 +22,70 @@ import com.nhom11.models.LopHoc;
 
 public class MainActivity extends AppCompatActivity {
 
+    SharedPreferences sharedPreferences = null;
+    Button btnLogin;
+    CheckBox ckbSaveAccount;
+    EditText editUsername, editPassword;
     MyDatabaseHelper databaseHelper = null;
+
+    String usernamePref, passwordPref, saveAccountPref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        sharedPreferences = getSharedPreferences("auth", MODE_PRIVATE);
 
         databaseHelper = MyDatabaseHelper.getInstance(getApplicationContext());
 
+        getWidget();
+
         initHocPhan();
         initGiangVien();
+        initLopHoc();
 
 //        initDataDemo();
+
+        usernamePref = sharedPreferences.getString("username", "");
+        passwordPref = sharedPreferences.getString("password", "");
+        saveAccountPref = sharedPreferences.getString("saveAccount", "");
+
+        editUsername.setText(usernamePref);
+        editPassword.setText(passwordPref);
+        ckbSaveAccount.setChecked(Boolean.parseBoolean(saveAccountPref));
+
+        btnLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                GiangVien giangVien = login(editUsername.getText().toString(),
+                        editPassword.getText().toString());
+
+                if (giangVien != null) {
+                    Intent intent = new Intent(MainActivity.this, Dashboard.class);
+                    intent.putExtra("giangVien", giangVien);
+                    startActivity(intent);
+
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString("saveAccount", String.valueOf(ckbSaveAccount.isChecked()));
+                    if (ckbSaveAccount.isChecked()) {
+                        editor.putString("username", giangVien.getUsername());
+                        editor.putString("password", giangVien.getPassword());
+                    } else {
+                        editor.putString("username", "");
+                        editor.putString("password", "");
+                        editUsername.setText("");
+                        editPassword.setText("");
+                    }
+                    editor.apply();
+
+                } else {
+                    Toast.makeText(getApplicationContext(), "Đăng nhập thất bại", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
     private void initDataDemo() {
-        LopHoc lopHoc = new LopHoc(1, "KTPM2", 80);
-
-        databaseHelper.insertLopHoc(lopHoc);
-
         BaoCaoHocPhan baoCaoHocPhan = new BaoCaoHocPhan(1, "IT6029",
                 5, 4, "Tự chọn");
         databaseHelper.insertBaoCaoHocPhan(baoCaoHocPhan);
@@ -71,5 +123,38 @@ public class MainActivity extends AppCompatActivity {
             databaseHelper.insertGiangVien(giangVien2);
             databaseHelper.insertGiangVien(giangVien3);
         }
+    }
+
+    private void initLopHoc() {
+        if (databaseHelper.getTotalRecord(MyDatabaseHelper.TABLE_LOP_HOC) == 0) {
+            LopHoc lopHoc1 = new LopHoc(1, "KTPM2", 80);
+            LopHoc lopHoc2 = new LopHoc(2, "CNTT1", 75);
+            LopHoc lopHoc3 = new LopHoc(3, "HTTT", 78);
+            databaseHelper.insertLopHoc(lopHoc1);
+            databaseHelper.insertLopHoc(lopHoc2);
+            databaseHelper.insertLopHoc(lopHoc3);
+        }
+    }
+
+    public GiangVien login(String username, String password) {
+        GiangVien giangVien = databaseHelper.getGiangVienByUsername(username);
+
+        if (giangVien == null) {
+            return null;
+        }
+
+        if (giangVien.getUsername().compareTo(username) == 0 &&
+                giangVien.getPassword().compareTo(password) == 0) {
+            return giangVien;
+        }
+
+        return null;
+    }
+
+    private void getWidget() {
+        btnLogin = findViewById(R.id.btnLogin);
+        editUsername = findViewById(R.id.editUsername);
+        editPassword = findViewById(R.id.editPassword);
+        ckbSaveAccount = findViewById(R.id.ckbSaveAccount);
     }
 }

@@ -1,6 +1,9 @@
 package com.nhom11.models;
 
-public class GiangVien {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class GiangVien implements Parcelable {
     private Integer maGiangVien;
     private String tenGiangVien;
     private String username;
@@ -15,6 +18,29 @@ public class GiangVien {
         this.username = username;
         this.password = password;
     }
+
+    protected GiangVien(Parcel in) {
+        if (in.readByte() == 0) {
+            maGiangVien = null;
+        } else {
+            maGiangVien = in.readInt();
+        }
+        tenGiangVien = in.readString();
+        username = in.readString();
+        password = in.readString();
+    }
+
+    public static final Creator<GiangVien> CREATOR = new Creator<GiangVien>() {
+        @Override
+        public GiangVien createFromParcel(Parcel in) {
+            return new GiangVien(in);
+        }
+
+        @Override
+        public GiangVien[] newArray(int size) {
+            return new GiangVien[size];
+        }
+    };
 
     public Integer getMaGiangVien() {
         return maGiangVien;
@@ -56,5 +82,23 @@ public class GiangVien {
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 '}';
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        if (maGiangVien == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeInt(maGiangVien);
+        }
+        parcel.writeString(tenGiangVien);
+        parcel.writeString(username);
+        parcel.writeString(password);
     }
 }

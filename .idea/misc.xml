@@ -3,8 +3,18 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.37447916666666664" />
+        <entry key="app/src/main/res/drawable/custom_btn_login.xml" value="0.37447916666666664" />
+        <entry key="app/src/main/res/drawable/custom_circle_logo.xml" value="0.37447916666666664" />
+        <entry key="app/src/main/res/drawable/custom_edit_text_login.xml" value="0.37447916666666664" />
+        <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.37447916666666664" />
+        <entry key="app/src/main/res/drawable/left_arrow.xml" value="0.37447916666666664" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.35833333333333334" />
         <entry key="app/src/main/res/layout/activity_xem_danh_sach_bao_cao_hoc_phan.xml" value="0.35833333333333334" />
         <entry key="app/src/main/res/layout/activity_xem_ds_bao_cao_hoc_phan.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/item_xem_ds_bcao_hphan.xml" value="0.35833333333333334" />
+        <entry key="app/src/main/res/menu/xem_ds_bcao_hphan_menu.xml" value="0.35833333333333334" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.37447916666666664" />
       </map>
     </option>
   </component>
