@@ -160,21 +160,6 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         return totalRows;
     }
 
-    public boolean checkLogin(String username, String password) {
-        GiangVien giangVien = getGiangVienByUsername(username);
-
-        if (giangVien == null) {
-            return false;
-        }
-
-        if (giangVien.getUsername().compareTo(username) == 0 &&
-                giangVien.getPassword().compareTo(password) == 0) {
-            return true;
-        }
-
-        return false;
-    }
-
     // HocPhan
     public boolean insertHocPhan(HocPhan hocPhan) {
         SQLiteDatabase db = getWritableDatabase();

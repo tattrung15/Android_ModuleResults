@@ -70,10 +70,10 @@
                         android:textColor="@color/black" />
 
                     <TextView
-                        android:id="@+id/maGiangVien"
+                        android:id="@+id/txtMaGiangVien"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="01"
+                        android:text=""
                         android:textColor="@color/black" />
 
                 </LinearLayout>
@@ -90,10 +90,10 @@
                         android:textColor="@color/black" />
 
                     <TextView
-                        android:id="@+id/tenGiangVien"
+                        android:id="@+id/txtTenGiangVien"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Vũ Thị Dương"
+                        android:text=""
                         android:textColor="@color/black" />
 
                 </LinearLayout>
