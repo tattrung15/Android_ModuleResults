@@ -39,12 +39,12 @@
                 android:layout_height="match_parent" >
 
                 <TextView
-                    android:layout_marginTop="10dp"
                     android:id="@+id/textView2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="1. Thông tin chung"
-                    android:layout_marginBottom="10dp"
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginTop="20dp"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     android:textColor="@color/black"/>
@@ -82,6 +82,8 @@
                     android:layout_width="142dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"
                     android:text="Tổng số lớp trong học kỳ:"
                     android:textColor="@color/black"
                     android:textSize="16sp" />
@@ -91,6 +93,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:ems="10"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"
                     android:inputType="textPersonName"
                     android:layout_weight="1"
                     android:textColor="@color/black"
@@ -127,12 +131,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" >
                 <TextView
-                    android:layout_marginTop="10dp"
                     android:id="@+id/textView6"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"
                     android:text="2. Thông tin các tiết học"
-                    android:layout_marginBottom="10dp"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     android:textColor="@color/black"/>
@@ -170,7 +174,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:backgroundTint="#4CAF50"
+                    android:backgroundTint="#11CF19"
                     android:text="Thêm báo cáo" />
 
                 <Button
@@ -178,7 +182,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:backgroundTint="#CDDC39"
+                    android:backgroundTint="#FFC107"
                     android:text="Sửa" />
 
             </TableRow>
@@ -198,7 +202,7 @@
             </TableRow>
             <TableRow
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 >
 
                 <ListView
@@ -215,6 +219,7 @@
                     android:id="@+id/btnBack"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:backgroundTint="#009688"
                     android:text="Trở lại" />
             </TableRow>
         </LinearLayout>
