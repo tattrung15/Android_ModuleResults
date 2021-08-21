@@ -89,17 +89,25 @@ public class BaoCaoGiangDay {
         this.loaiTiet = loaiTiet;
     }
 
+//    @Override
+//    public String toString() {
+//        return "BaoCaoGiangDay{" +
+//                "maBaoCaoGiangDay=" + maBaoCaoGiangDay +
+//                ", maGiangVien=" + maGiangVien +
+//                ", maBaoCaoHocPhan=" + maBaoCaoHocPhan +
+//                ", maLop=" + maLop +
+//                ", tongSoLop=" + tongSoLop +
+//                ", tongSoGio=" + tongSoGio +
+//                ", soTietMotNgay=" + soTietMotNgay +
+//                ", loaiTiet='" + loaiTiet + '\'' +
+//                '}';
+//    }
+
+
     @Override
     public String toString() {
-        return "BaoCaoGiangDay{" +
-                "maBaoCaoGiangDay=" + maBaoCaoGiangDay +
-                ", maGiangVien=" + maGiangVien +
-                ", maBaoCaoHocPhan=" + maBaoCaoHocPhan +
-                ", maLop=" + maLop +
-                ", tongSoLop=" + tongSoLop +
-                ", tongSoGio=" + tongSoGio +
-                ", soTietMotNgay=" + soTietMotNgay +
-                ", loaiTiet='" + loaiTiet + '\'' +
-                '}';
+        return "+" + maBaoCaoGiangDay + " - " + maGiangVien + " - " + maBaoCaoHocPhan + " - "
+                + maLop + " - " + tongSoLop + " lớp - " + tongSoGio + " giờ - " + soTietMotNgay
+                + " - " + loaiTiet;
     }
 }
