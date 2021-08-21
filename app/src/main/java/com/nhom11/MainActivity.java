@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
 
         initHocPhan();
         initGiangVien();
+        initLopHoc();
 
 //        initDataDemo();
 
@@ -85,10 +86,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initDataDemo() {
-        LopHoc lopHoc = new LopHoc(1, "KTPM2", 80);
-
-        databaseHelper.insertLopHoc(lopHoc);
-
         BaoCaoHocPhan baoCaoHocPhan = new BaoCaoHocPhan(1, "IT6029",
                 5, 4, "Tự chọn");
         databaseHelper.insertBaoCaoHocPhan(baoCaoHocPhan);
@@ -125,6 +122,17 @@ public class MainActivity extends AppCompatActivity {
             databaseHelper.insertGiangVien(giangVien1);
             databaseHelper.insertGiangVien(giangVien2);
             databaseHelper.insertGiangVien(giangVien3);
+        }
+    }
+
+    private void initLopHoc() {
+        if (databaseHelper.getTotalRecord(MyDatabaseHelper.TABLE_LOP_HOC) == 0) {
+            LopHoc lopHoc1 = new LopHoc(1, "KTPM2", 80);
+            LopHoc lopHoc2 = new LopHoc(2, "CNTT1", 75);
+            LopHoc lopHoc3 = new LopHoc(3, "HTTT", 78);
+            databaseHelper.insertLopHoc(lopHoc1);
+            databaseHelper.insertLopHoc(lopHoc2);
+            databaseHelper.insertLopHoc(lopHoc3);
         }
     }
 
