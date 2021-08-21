@@ -170,6 +170,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:backgroundTint="#4CAF50"
                     android:text="Thêm báo cáo" />
 
                 <Button
@@ -177,6 +178,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:backgroundTint="#CDDC39"
                     android:text="Sửa" />
 
             </TableRow>
