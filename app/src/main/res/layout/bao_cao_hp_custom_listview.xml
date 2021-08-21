@@ -48,7 +48,11 @@
             android:layout_weight="1"
             android:text="Loại HP" />
     </TableRow>
-
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clickable="true"
+        app:rippleColor="@color/blue_light">
     <TableRow
         android:layout_width="match_parent"
         android:layout_height="34dp"
@@ -91,6 +95,6 @@
             android:textSize="16sp"
             android:text="TextView" />
     </TableRow>
-
+    </com.google.android.material.card.MaterialCardView>
 
 </LinearLayout>
