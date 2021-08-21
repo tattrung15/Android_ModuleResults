@@ -30,9 +30,6 @@ public class HocPhan {
 
     @Override
     public String toString() {
-        return "HocPhan{" +
-                "maHocPhan='" + maHocPhan + '\'' +
-                ", tenHocPhan='" + tenHocPhan + '\'' +
-                '}';
+        return  maHocPhan + "               " + tenHocPhan ;
     }
 }

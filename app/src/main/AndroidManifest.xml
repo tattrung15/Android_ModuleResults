@@ -12,6 +12,7 @@
         <activity android:name=".dashboard.Dashboard" />
         <activity android:name=".xem_ds_bao_cao_hoc_phan.XemDSBaoCaoHocPhan" />
         <activity android:name=".bao_cao_giang_day.BaoCaoGiangDayActivity" />
+        <activity android:name=".chi_tiet_bao_cao_hoc_phan.ChiTietBaoCaoHocPhan" />
         <activity
             android:name=".MainActivity"
             android:exported="true">
@@ -22,5 +23,4 @@
             </intent-filter>
         </activity>
     </application>
-
 </manifest>
