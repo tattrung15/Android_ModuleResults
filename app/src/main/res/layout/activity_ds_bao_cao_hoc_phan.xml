@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/gray"
     android:orientation="vertical"
-    tools:context=".xem_ds_bao_cao_hoc_phan.XemDSBaoCaoHocPhan">
+    tools:context=".ds_bao_cao_hoc_phan.DSBaoCaoHocPhan">
 
 
     <com.google.android.material.appbar.AppBarLayout

@@ -1,22 +1,28 @@
 package com.nhom11.dashboard;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.android.material.appbar.MaterialToolbar;
 import com.nhom11.R;
 import com.nhom11.bao_cao_giang_day.BaoCaoGiangDayActivity;
-import com.nhom11.models.BaoCaoGiangDay;
 import com.nhom11.models.GiangVien;
-import com.nhom11.xem_ds_bao_cao_hoc_phan.XemDSBaoCaoHocPhan;
+import com.nhom11.ds_bao_cao_hoc_phan.DSBaoCaoHocPhan;
+import com.nhom11.utils.CustomAlertDialog;
 
 public class Dashboard extends AppCompatActivity {
 
-    Button btnThoatTaiKhoan, btnXemDSBaoCaoHP, btnXemBaoCaoGD, btnNhapBaoCaoGD;
+    MaterialToolbar topAppBarDashboard;
+    MenuItem optionMenuExit;
+    Button btnThoatTaiKhoan, btnBaoCaoHocPhan, btnBaoCaoGiangDay;
     TextView txtMaGiangVien, txtTenGiangVien;
     GiangVien giangVien;
 
@@ -35,23 +41,35 @@ public class Dashboard extends AppCompatActivity {
             txtTenGiangVien.setText(giangVien.getTenGiangVien());
         }
 
-        btnXemDSBaoCaoHP.setOnClickListener(new View.OnClickListener() {
+        setListeners();
+    }
+
+    private void setListeners() {
+        topAppBarDashboard.setNavigationOnClickListener(v -> {
+            finish();
+        });
+
+        topAppBarDashboard.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                if (item.getItemId() == R.id.optionMenuExit) {
+                    AlertDialog alertDialog = CustomAlertDialog.buildAlertDialogExit(Dashboard.this);
+                    alertDialog.show();
+                    return true;
+                }
+                return false;
+            }
+        });
+
+        btnBaoCaoHocPhan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(Dashboard.this, XemDSBaoCaoHocPhan.class);
+                Intent intent = new Intent(Dashboard.this, DSBaoCaoHocPhan.class);
                 startActivity(intent);
             }
         });
 
-        btnXemBaoCaoGD.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(Dashboard.this, BaoCaoGiangDayActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        btnNhapBaoCaoGD.setOnClickListener(new View.OnClickListener() {
+        btnBaoCaoGiangDay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(Dashboard.this, BaoCaoGiangDayActivity.class);
@@ -68,11 +86,12 @@ public class Dashboard extends AppCompatActivity {
     }
 
     private void getWidget() {
+        topAppBarDashboard = findViewById(R.id.topAppBarDashboard);
+        optionMenuExit = findViewById(R.id.optionMenuExit);
         txtMaGiangVien = findViewById(R.id.txtMaGiangVien);
         txtTenGiangVien = findViewById(R.id.txtTenGiangVien);
         btnThoatTaiKhoan = findViewById(R.id.btnThoatTaiKhoan);
-        btnXemDSBaoCaoHP = findViewById(R.id.btnXemDSBaoCaoHP);
-        btnXemBaoCaoGD = findViewById(R.id.btnXemBaoCaoGD);
-        btnNhapBaoCaoGD = findViewById(R.id.btnNhapBaoCaoGD);
+        btnBaoCaoHocPhan = findViewById(R.id.btnBaoCaoHocPhan);
+        btnBaoCaoGiangDay = findViewById(R.id.btnBaoCaoGiangDay);
     }
 }

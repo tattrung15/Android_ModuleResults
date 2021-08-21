@@ -3,32 +3,23 @@ package com.nhom11.dto;
 public class BaoCaoHocPhanDTO {
     private int maBaoCaoHocPhan;
     private String maHocPhan;
+    private String tenHocPhan;
     private int tongSoLop;
     private float tongSoGio;
-    private String tenHocPhan;
-
-
-    public BaoCaoHocPhanDTO(int maBaoCaoHocPhan, String maHocPhan, int tongSoLop, float tongSoGio, String loaiHocPhan, String tenHocPhan) {
-        this.maBaoCaoHocPhan = maBaoCaoHocPhan;
-        this.maHocPhan = maHocPhan;
-        this.tongSoLop = tongSoLop;
-        this.tongSoGio = tongSoGio;
-        this.loaiHocPhan = loaiHocPhan;
-        this.tenHocPhan = tenHocPhan;
-    }
+    private String loaiHocPhan;
 
     public BaoCaoHocPhanDTO() {
     }
 
-    public String getTenHocPhan() {
-        return tenHocPhan;
-    }
-
-    public void setTenHocPhan(String tenHocPhan) {
+    public BaoCaoHocPhanDTO(int maBaoCaoHocPhan, String maHocPhan, String tenHocPhan, int tongSoLop,
+                            float tongSoGio, String loaiHocPhan) {
+        this.maBaoCaoHocPhan = maBaoCaoHocPhan;
+        this.maHocPhan = maHocPhan;
         this.tenHocPhan = tenHocPhan;
+        this.tongSoLop = tongSoLop;
+        this.tongSoGio = tongSoGio;
+        this.loaiHocPhan = loaiHocPhan;
     }
-
-    private String loaiHocPhan;
 
     public int getMaBaoCaoHocPhan() {
         return maBaoCaoHocPhan;
@@ -62,6 +53,14 @@ public class BaoCaoHocPhanDTO {
         this.tongSoGio = tongSoGio;
     }
 
+    public String getTenHocPhan() {
+        return tenHocPhan;
+    }
+
+    public void setTenHocPhan(String tenHocPhan) {
+        this.tenHocPhan = tenHocPhan;
+    }
+
     public String getLoaiHocPhan() {
         return loaiHocPhan;
     }
@@ -70,4 +69,15 @@ public class BaoCaoHocPhanDTO {
         this.loaiHocPhan = loaiHocPhan;
     }
 
+    @Override
+    public String toString() {
+        return "BaoCaoHocPhanDTO{" +
+                "maBaoCaoHocPhan=" + maBaoCaoHocPhan +
+                ", maHocPhan='" + maHocPhan + '\'' +
+                ", tenHocPhan='" + tenHocPhan + '\'' +
+                ", tongSoLop=" + tongSoLop +
+                ", tongSoGio=" + tongSoGio +
+                ", loaiHocPhan='" + loaiHocPhan + '\'' +
+                '}';
+    }
 }

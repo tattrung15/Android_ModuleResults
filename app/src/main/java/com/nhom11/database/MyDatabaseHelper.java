@@ -7,11 +7,15 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.nhom11.dto.BaoCaoHocPhanDTO;
 import com.nhom11.models.BaoCaoGiangDay;
 import com.nhom11.models.BaoCaoHocPhan;
 import com.nhom11.models.GiangVien;
 import com.nhom11.models.HocPhan;
 import com.nhom11.models.LopHoc;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MyDatabaseHelper extends SQLiteOpenHelper {
 
@@ -261,6 +265,28 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
 
         return new BaoCaoHocPhan(cursor.getInt(0), cursor.getString(1), cursor.getInt(2),
                 cursor.getFloat(3), cursor.getString(4));
+    }
+
+    public List<BaoCaoHocPhanDTO> getAllBaoCaoHP() {
+        SQLiteDatabase db = getReadableDatabase();
+        List<BaoCaoHocPhanDTO> baoCaoHocPhanDTOs = new ArrayList<>();
+        Cursor cursor = db.query(TABLE_BAO_CAO_HOC_PHAN + " , " + TABLE_HOC_PHAN,
+                new String[]{MA_BCHP_COLUMN, TABLE_HOC_PHAN + "." + MA_HP_COLUMN, TEN_HP_COLUMN,
+                        TONG_SO_LOP_BCHP_COLUMN, TONG_SO_GIO_BCHP_COLUMN, LOAI_HP_COLUMN},
+                TABLE_BAO_CAO_HOC_PHAN + "." + MA_HP_COLUMN +
+                        " = " + TABLE_HOC_PHAN + "." + MA_HP_COLUMN,
+                null, null, null, null);
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                baoCaoHocPhanDTOs.add(
+                        new BaoCaoHocPhanDTO(cursor.getInt(0), cursor.getString(1),
+                                cursor.getString(2), cursor.getInt(3), cursor.getFloat(4),
+                                cursor.getString(5)));
+            } while (cursor.moveToNext());
+            cursor.close();
+        }
+        db.close();
+        return baoCaoHocPhanDTOs;
     }
 
     // BaoCaoGiangDay
