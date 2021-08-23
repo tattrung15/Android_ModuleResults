@@ -3,6 +3,7 @@ package com.nhom11.ds_bao_cao_hoc_phan;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -39,11 +40,18 @@ public class DSBaoCaoHocPhan extends AppCompatActivity {
 
         getElements();
 
-        listView = findViewById(R.id.listView_DSBCHP);
         adapter = new BaoCaoHocPhanAdapter(this, baoCaoHocPhanDTOs);
         listView.setAdapter(adapter);
 
         setListeners();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        baoCaoHocPhanDTOs = databaseHelper.getAllBaoCaoHP();
+        adapter = new BaoCaoHocPhanAdapter(this, baoCaoHocPhanDTOs);
+        listView.setAdapter(adapter);
     }
 
     protected void getElements() {

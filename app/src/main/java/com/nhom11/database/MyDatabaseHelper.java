@@ -301,8 +301,28 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
             } while (cursor.moveToNext());
             cursor.close();
         }
-        db.close();
+
+        if (ENV.compareTo("DEV") != 0) {
+            db.close();
+        }
+
         return baoCaoHocPhanDTOs;
+    }
+
+    public int updateBaoCaoHocPhan(BaoCaoHocPhan baoCaoHocPhan) {
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(TONG_SO_LOP_BCHP_COLUMN, baoCaoHocPhan.getTongSoLop());
+        values.put(TONG_SO_GIO_BCHP_COLUMN, baoCaoHocPhan.getTongSoGio());
+        values.put(LOAI_HP_COLUMN, baoCaoHocPhan.getLoaiHocPhan());
+        int rowEffect = db.update(TABLE_BAO_CAO_HOC_PHAN, values, MA_BCHP_COLUMN + " = ?",
+                new String[]{String.valueOf(baoCaoHocPhan.getMaBaoCaoHocPhan())});
+
+        if (ENV.compareTo("DEV") != 0) {
+            db.close();
+        }
+
+        return rowEffect;
     }
 
     // BaoCaoGiangDay
