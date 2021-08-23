@@ -155,13 +155,30 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         onCreate(sqLiteDatabase);
     }
 
-    public int getTotalRecord(String TABLE_NAME) {
+    public int getTotalRecord(String tableName) {
         SQLiteDatabase db = getReadableDatabase();
-        String sql = "SELECT * FROM " + TABLE_NAME;
+        String sql = "SELECT * FROM " + tableName;
         Cursor cursor = db.rawQuery(sql, null);
         int totalRows = cursor.getCount();
         cursor.close();
         return totalRows;
+    }
+
+    public int getLastId(String tableName) {
+        int lastId = 0;
+        SQLiteDatabase db = getReadableDatabase();
+        String selectQuery = "SELECT * FROM " + tableName;
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (cursor.moveToLast()) {
+            lastId = cursor.getInt(0);
+        }
+
+        if (ENV.compareTo("DEV") != 0) {
+            db.close();
+        }
+
+        return lastId;
     }
 
     // HocPhan
@@ -317,6 +334,18 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         values.put(LOAI_HP_COLUMN, baoCaoHocPhan.getLoaiHocPhan());
         int rowEffect = db.update(TABLE_BAO_CAO_HOC_PHAN, values, MA_BCHP_COLUMN + " = ?",
                 new String[]{String.valueOf(baoCaoHocPhan.getMaBaoCaoHocPhan())});
+
+        if (ENV.compareTo("DEV") != 0) {
+            db.close();
+        }
+
+        return rowEffect;
+    }
+
+    public int deleteBaoCaoHocPhan(int maBaoCaoHocPhan) {
+        SQLiteDatabase db = getReadableDatabase();
+        int rowEffect = db.delete(TABLE_BAO_CAO_HOC_PHAN, MA_BCHP_COLUMN + " = ?", new
+                String[]{String.valueOf(maBaoCaoHocPhan)});
 
         if (ENV.compareTo("DEV") != 0) {
             db.close();
