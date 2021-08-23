@@ -1,10 +1,12 @@
 package com.nhom11.chi_tiet_bao_cao_hoc_phan;
 
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -147,30 +149,91 @@ public class ChiTietBaoCaoHocPhan extends AppCompatActivity {
             }
         });
 
+        btnBCHP_Them.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (editBCHPTongLop.getText().toString().compareTo("") == 0) {
+                    Toast.makeText(getBaseContext(), "Tổng số lớp không hợp lệ",
+                            Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (editBCHPSoGio.getText().toString().compareTo("") == 0) {
+                    Toast.makeText(getBaseContext(), "Tổng số giờ không hợp lệ",
+                            Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                int tongSoLop = Integer.parseInt(editBCHPTongLop.getText().toString());
+                float tongSoGio = Float.parseFloat(editBCHPSoGio.getText().toString());
+
+                if (tongSoLop <= 0 || tongSoGio <= 0) {
+                    Toast.makeText(getBaseContext(), "Dữ liệu không hợp lệ",
+                            Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                int increaseId = databaseHelper.getLastId(MyDatabaseHelper.TABLE_BAO_CAO_HOC_PHAN) + 1;
+                HocPhan hocPhan = (HocPhan) spinnerHP.getSelectedItem();
+                BaoCaoHocPhan baoCaoHocPhan = new BaoCaoHocPhan(increaseId, hocPhan.getMaHocPhan(),
+                        tongSoLop, tongSoGio, spinnerLoaiHP.getSelectedItem().toString());
+
+                try {
+                    BaoCaoHocPhan baoCaoHocPhanNew = databaseHelper.insertBaoCaoHocPhan(baoCaoHocPhan);
+                    BaoCaoHocPhanDTO baoCaoHocPhanDTONew = new BaoCaoHocPhanDTO(baoCaoHocPhanNew.getMaBaoCaoHocPhan(),
+                            baoCaoHocPhanNew.getMaHocPhan(), hocPhan.getTenHocPhan(), tongSoLop,
+                            tongSoGio, spinnerLoaiHP.getSelectedItem().toString());
+
+                    if (baoCaoHocPhanNew != null) {
+                        Toast.makeText(getApplicationContext(), "Thêm thành công",
+                                Toast.LENGTH_SHORT).show();
+                        baoCaoHocPhanDTOs.add(baoCaoHocPhanDTONew);
+                        adapterBCHP.notifyDataSetChanged();
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Thêm thất bại",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                } catch (Exception e) {
+                    Toast.makeText(getApplicationContext(), "Thêm thất bại",
+                            Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
         btnBCHP_Sua.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (baoCaoHocPhanDTO != null) {
 
                     if (editBCHPTongLop.getText().toString().compareTo("") == 0) {
-                        Toast.makeText(getBaseContext(), "Tổng số lớp không được để trống",
+                        Toast.makeText(getBaseContext(), "Tổng số lớp không hợp lệ",
                                 Toast.LENGTH_SHORT).show();
                         return;
                     }
 
                     if (editBCHPSoGio.getText().toString().compareTo("") == 0) {
-                        Toast.makeText(getBaseContext(), "Tổng số giờ không được để trống",
+                        Toast.makeText(getBaseContext(), "Tổng số giờ không hợp lệ",
                                 Toast.LENGTH_SHORT).show();
                         return;
                     }
 
-                    baoCaoHocPhanDTO.setTongSoLop(Integer.parseInt(editBCHPTongLop.getText().toString()));
-                    baoCaoHocPhanDTO.setTongSoGio(Float.parseFloat(editBCHPSoGio.getText().toString()));
+                    int tongSoLop = Integer.parseInt(editBCHPTongLop.getText().toString());
+                    float tongSoGio = Float.parseFloat(editBCHPSoGio.getText().toString());
+
+                    if (tongSoLop <= 0 || tongSoGio <= 0) {
+                        Toast.makeText(getBaseContext(), "Dữ liệu không hợp lệ",
+                                Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
+                    baoCaoHocPhanDTO.setTongSoLop(tongSoLop);
+                    baoCaoHocPhanDTO.setTongSoGio(tongSoGio);
                     baoCaoHocPhanDTO.setLoaiHocPhan(spinnerLoaiHP.getSelectedItem().toString());
 
                     BaoCaoHocPhan baoCaoHocPhan = new BaoCaoHocPhan(baoCaoHocPhanDTO.getMaBaoCaoHocPhan(),
                             baoCaoHocPhanDTO.getMaHocPhan(), baoCaoHocPhanDTO.getTongSoLop(),
                             baoCaoHocPhanDTO.getTongSoGio(), baoCaoHocPhanDTO.getLoaiHocPhan());
+
                     int rowEffect = databaseHelper.updateBaoCaoHocPhan(baoCaoHocPhan);
                     if (rowEffect >= 0) {
                         Toast.makeText(getApplicationContext(), "Cập nhập thành công",
@@ -181,6 +244,73 @@ public class ChiTietBaoCaoHocPhan extends AppCompatActivity {
                                 Toast.LENGTH_SHORT).show();
                     }
                 }
+            }
+        });
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                baoCaoHocPhanDTO = baoCaoHocPhanDTOs.get(i);
+
+                int positionSpinnerHP = 0;
+                for (int j = 0; j < hocPhans.size(); j++) {
+                    if (hocPhans.get(j).getMaHocPhan().compareTo(baoCaoHocPhanDTO.getMaHocPhan()) == 0) {
+                        positionSpinnerHP = j;
+                        break;
+                    }
+                }
+                spinnerHP.setSelection(positionSpinnerHP);
+
+                int positionSpinnerLHP = 0;
+                for (int j = 0; j < arrLoaiHocPhan.size(); j++) {
+                    if (arrLoaiHocPhan.get(j).compareTo(baoCaoHocPhanDTO.getLoaiHocPhan()) == 0) {
+                        positionSpinnerLHP = j;
+                        break;
+                    }
+                }
+                spinnerLoaiHP.setSelection(positionSpinnerLHP);
+
+                editBCHPTongLop.setText(String.valueOf(baoCaoHocPhanDTO.getTongSoLop()));
+                editBCHPSoGio.setText(String.valueOf(baoCaoHocPhanDTO.getTongSoGio()));
+            }
+        });
+
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                BaoCaoHocPhanDTO baoCaoHocPhanDTO = baoCaoHocPhanDTOs.get(i);
+
+                int themeResId = android.R.style.Theme_DeviceDefault_Light_Dialog_Alert;
+                AlertDialog.Builder b = new AlertDialog.Builder(ChiTietBaoCaoHocPhan.this, themeResId);
+                b.setTitle("Xóa dữ liệu");
+                b.setMessage("Bạn có đồng ý xóa dữ liệu không?");
+                b.setPositiveButton("Đồng ý", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        try {
+                            int rowEffect = databaseHelper.deleteBaoCaoHocPhan(baoCaoHocPhanDTO.getMaBaoCaoHocPhan());
+                            if (rowEffect >= 1) {
+                                Toast.makeText(getApplicationContext(), "Xóa thành công",
+                                        Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(getApplicationContext(), "Xóa thất bại",
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                            baoCaoHocPhanDTOs.remove(i);
+                            adapterBCHP.notifyDataSetChanged();
+                        } catch (Exception e) {
+                            Toast.makeText(getApplicationContext(), "Xóa thất bại",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+                b.setNegativeButton("Không", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+                AlertDialog al = b.create();
+                al.show();
+                return true;
             }
         });
     }
