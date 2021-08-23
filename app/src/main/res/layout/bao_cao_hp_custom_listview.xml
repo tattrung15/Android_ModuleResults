@@ -1,59 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    app:layoutDescription="@xml/bao_cao_hp_custom_listview_scene">
+    android:padding="10dp">
 
-
-    <com.google.android.material.card.MaterialCardView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:clickable="true"
-        app:rippleColor="@color/blue_light">
     <TableRow
         android:layout_width="match_parent"
-        android:layout_height="34dp"
-        android:weightSum="4"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/txtBCHP_TenHP"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Mã học phần: "
+            android:textColor="@color/black" />
 
         <TextView
             android:id="@+id/txtBCHP_MaHP"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="TextView"
-            android:textColor="@color/black"
-            android:textSize="16sp" />
+            android:textColor="@color/black" />
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tổng số lớp: "
+            android:textColor="@color/black" />
 
         <TextView
             android:id="@+id/txtBCHP_TongSoLop"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="TextView"
-            android:textColor="@color/black"
-            android:textSize="16sp" />
+            android:textColor="@color/black" />
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tổng số giờ: "
+            android:textColor="@color/black" />
 
         <TextView
             android:id="@+id/txtBCHP_TongSoGio"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="TextView"
-            android:textColor="@color/black"
-            android:textSize="16sp" />
+            android:textColor="@color/black" />
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Loại học phần: "
+            android:textColor="@color/black" />
 
         <TextView
             android:id="@+id/txtBCHP_LoaiHP"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:textColor="@color/black"
-            android:textSize="16sp"
-            android:text="TextView" />
+            android:textColor="@color/black" />
     </TableRow>
-    </com.google.android.material.card.MaterialCardView>
 
 </LinearLayout>

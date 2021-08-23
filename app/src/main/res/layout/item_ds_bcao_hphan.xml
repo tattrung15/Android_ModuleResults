@@ -9,7 +9,7 @@
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:clickable="true"
+        android:clickable="false"
         app:rippleColor="@color/blue_light">
 
         <LinearLayout

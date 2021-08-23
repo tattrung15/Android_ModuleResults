@@ -109,9 +109,9 @@
             android:layout_below="@+id/cardProfile"
             android:layout_centerHorizontal="true"
             android:layout_marginHorizontal="20dp"
-            android:layout_marginTop="150dp"
+            android:layout_marginTop="120dp"
             android:background="@drawable/custom_btn_dashboard"
-            android:text="Báo cáo học phần"
+            android:text="Danh sách báo cáo học phần"
             android:textColor="@color/white" />
 
         <Button
@@ -126,17 +126,17 @@
             android:text="Báo cáo giảng dạy"
             android:textColor="@color/white" />
 
-<!--        <Button-->
-<!--            android:id="@+id/btnNhapBaoCaoGD"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_below="@+id/btnXemBaoCaoGD"-->
-<!--            android:layout_centerHorizontal="true"-->
-<!--            android:layout_marginHorizontal="20dp"-->
-<!--            android:layout_marginTop="30dp"-->
-<!--            android:background="@drawable/custom_btn_dashboard"-->
-<!--            android:text="Nhập báo cáo giảng dạy"-->
-<!--            android:textColor="@color/white" />-->
+        <Button
+            android:id="@+id/btnNhapBaoCaoGD"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/btnBaoCaoGiangDay"
+            android:layout_centerHorizontal="true"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/custom_btn_dashboard"
+            android:text="Nhập báo cáo học phần"
+            android:textColor="@color/white" />
 
         <Button
             android:id="@+id/btnThoatTaiKhoan"

@@ -11,16 +11,16 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.nhom11.R;
-import com.nhom11.models.BaoCaoHocPhan;
+import com.nhom11.dto.BaoCaoHocPhanDTO;
 
 import java.util.ArrayList;
 
 public class CustomListview extends ArrayAdapter {
     Activity context = null;
     int layoutID;
-    ArrayList<BaoCaoHocPhan> list = null;
+    ArrayList<BaoCaoHocPhanDTO> list = null;
 
-    public CustomListview(@NonNull Activity context, int layoutID, @NonNull ArrayList<BaoCaoHocPhan> objects) {
+    public CustomListview(@NonNull Activity context, int layoutID, @NonNull ArrayList<BaoCaoHocPhanDTO> objects) {
         super(context, layoutID, objects);
         this.context = context;
         this.layoutID = layoutID;
@@ -31,18 +31,18 @@ public class CustomListview extends ArrayAdapter {
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         LayoutInflater inflater = context.getLayoutInflater();
-        convertView = inflater.inflate(layoutID,null);
-
+        convertView = inflater.inflate(layoutID, null);
         if (list.size() > 0) {
-            //lấy dòng thứ i
-            final TextView txtBCHP_MaHP =convertView.findViewById(R.id.txtBCHP_MaHP);
-            final TextView txtBCHP_TongSoLop = convertView.findViewById(R.id.txtBCHP_TongSoLop);
-            final TextView txtBCHP_TongSoGio = convertView.findViewById(R.id.txtBCHP_TongSoGio);
-            final TextView txtBCHP_LoaiHP = convertView.findViewById(R.id.txtBCHP_LoaiHP);
+            TextView txtBCHP_MaHP = convertView.findViewById(R.id.txtBCHP_MaHP);
+            TextView txtBCHP_TenHP = convertView.findViewById(R.id.txtBCHP_TenHP);
+            TextView txtBCHP_TongSoLop = convertView.findViewById(R.id.txtBCHP_TongSoLop);
+            TextView txtBCHP_TongSoGio = convertView.findViewById(R.id.txtBCHP_TongSoGio);
+            TextView txtBCHP_LoaiHP = convertView.findViewById(R.id.txtBCHP_LoaiHP);
             //lấy bản ghi thứ position gán cho thành phần tương ứng
             txtBCHP_MaHP.setText(list.get(position).getMaHocPhan());
-            txtBCHP_TongSoLop.setText(list.get(position).getTongSoLop()+" ");
-            txtBCHP_TongSoGio.setText(list.get(position).getTongSoGio()+" ");
+            txtBCHP_TenHP.setText(list.get(position).getTenHocPhan());
+            txtBCHP_TongSoLop.setText(String.valueOf(list.get(position).getTongSoLop()));
+            txtBCHP_TongSoGio.setText(String.valueOf(list.get(position).getTongSoGio()));
             txtBCHP_LoaiHP.setText(list.get(position).getLoaiHocPhan());
         }
         return convertView;
