@@ -32,10 +32,10 @@ public class BaoCaoGiangDayAdapter extends ArrayAdapter {
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         LayoutInflater inflater = context.getLayoutInflater();
-        convertView = inflater.inflate(layoutID,null);
+        convertView = inflater.inflate(layoutID, null);
         if (list.size() > 0) {
 
-            final TextView txtTenLopBCGD =convertView.findViewById(R.id.txtTenLopBCGD);
+            final TextView txtTenLopBCGD = convertView.findViewById(R.id.txtTenLopBCGD);
             final TextView txtSiSoBCGD = convertView.findViewById(R.id.txtSiSoBCGD);
             final TextView txtSoTietBCGD = convertView.findViewById(R.id.txtSoTietBCGD);
 

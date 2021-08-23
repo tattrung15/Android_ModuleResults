@@ -11,9 +11,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.nhom11.R;
+import com.nhom11.models.HocPhan;
 
 import java.util.ArrayList;
-import com.nhom11.models.HocPhan;
 
 public class CustomSpinner extends ArrayAdapter {
     Activity context = null;
@@ -26,14 +26,15 @@ public class CustomSpinner extends ArrayAdapter {
         this.layoutID = layoutID;
         this.list = objects;
     }
+
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         LayoutInflater inflater = context.getLayoutInflater();
-        convertView = inflater.inflate(layoutID,null);
+        convertView = inflater.inflate(layoutID, null);
         if (list.size() > 0) {
             //lấy dòng thứ i
-            final TextView txtMaHP =convertView.findViewById(R.id.txtMaHP);
+            final TextView txtMaHP = convertView.findViewById(R.id.txtMaHP);
             final TextView txtTenHP = convertView.findViewById(R.id.txtTenHP);
             //lấy bản ghi thứ position gán cho thành phần tương ứng
             txtMaHP.setText(list.get(position).getMaHocPhan());

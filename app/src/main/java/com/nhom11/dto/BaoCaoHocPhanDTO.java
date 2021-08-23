@@ -1,6 +1,9 @@
 package com.nhom11.dto;
 
-public class BaoCaoHocPhanDTO {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class BaoCaoHocPhanDTO implements Parcelable {
     private int maBaoCaoHocPhan;
     private String maHocPhan;
     private String tenHocPhan;
@@ -20,6 +23,27 @@ public class BaoCaoHocPhanDTO {
         this.tongSoGio = tongSoGio;
         this.loaiHocPhan = loaiHocPhan;
     }
+
+    protected BaoCaoHocPhanDTO(Parcel in) {
+        maBaoCaoHocPhan = in.readInt();
+        maHocPhan = in.readString();
+        tenHocPhan = in.readString();
+        tongSoLop = in.readInt();
+        tongSoGio = in.readFloat();
+        loaiHocPhan = in.readString();
+    }
+
+    public static final Creator<BaoCaoHocPhanDTO> CREATOR = new Creator<BaoCaoHocPhanDTO>() {
+        @Override
+        public BaoCaoHocPhanDTO createFromParcel(Parcel in) {
+            return new BaoCaoHocPhanDTO(in);
+        }
+
+        @Override
+        public BaoCaoHocPhanDTO[] newArray(int size) {
+            return new BaoCaoHocPhanDTO[size];
+        }
+    };
 
     public int getMaBaoCaoHocPhan() {
         return maBaoCaoHocPhan;
@@ -79,5 +103,20 @@ public class BaoCaoHocPhanDTO {
                 ", tongSoGio=" + tongSoGio +
                 ", loaiHocPhan='" + loaiHocPhan + '\'' +
                 '}';
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(maBaoCaoHocPhan);
+        parcel.writeString(maHocPhan);
+        parcel.writeString(tenHocPhan);
+        parcel.writeInt(tongSoLop);
+        parcel.writeFloat(tongSoGio);
+        parcel.writeString(loaiHocPhan);
     }
 }

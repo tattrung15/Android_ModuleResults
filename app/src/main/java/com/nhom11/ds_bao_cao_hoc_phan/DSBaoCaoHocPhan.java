@@ -1,17 +1,19 @@
 package com.nhom11.ds_bao_cao_hoc_phan;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.nhom11.R;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
 import com.google.android.material.appbar.MaterialToolbar;
+import com.nhom11.R;
+import com.nhom11.chi_tiet_bao_cao_hoc_phan.ChiTietBaoCaoHocPhan;
 import com.nhom11.database.MyDatabaseHelper;
 import com.nhom11.dto.BaoCaoHocPhanDTO;
 import com.nhom11.utils.CustomAlertDialog;
@@ -20,7 +22,6 @@ import java.util.List;
 
 public class DSBaoCaoHocPhan extends AppCompatActivity {
 
-    MenuItem topAppBarDSBaoCaoHP;
     MaterialToolbar topAppBar = null;
     ListView listView = null;
     BaoCaoHocPhanAdapter adapter = null;
@@ -70,7 +71,10 @@ public class DSBaoCaoHocPhan extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
+                BaoCaoHocPhanDTO baoCaoHocPhanDTO = baoCaoHocPhanDTOs.get(i);
+                Intent intent = new Intent(DSBaoCaoHocPhan.this, ChiTietBaoCaoHocPhan.class);
+                intent.putExtra("baoCaoHocPhanDTO", baoCaoHocPhanDTO);
+                startActivity(intent);
             }
         });
     }

@@ -1,8 +1,5 @@
 package com.nhom11.dashboard;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,18 +8,22 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
 import com.google.android.material.appbar.MaterialToolbar;
 import com.nhom11.R;
 import com.nhom11.bao_cao_giang_day.BaoCaoGiangDayActivity;
-import com.nhom11.models.GiangVien;
+import com.nhom11.chi_tiet_bao_cao_hoc_phan.ChiTietBaoCaoHocPhan;
 import com.nhom11.ds_bao_cao_hoc_phan.DSBaoCaoHocPhan;
+import com.nhom11.models.GiangVien;
 import com.nhom11.utils.CustomAlertDialog;
 
 public class Dashboard extends AppCompatActivity {
 
     MaterialToolbar topAppBarDashboard;
     MenuItem optionMenuExit;
-    Button btnThoatTaiKhoan, btnBaoCaoHocPhan, btnBaoCaoGiangDay;
+    Button btnThoatTaiKhoan, btnBaoCaoHocPhan, btnBaoCaoGiangDay, btnNhapBaoCaoGD;
     TextView txtMaGiangVien, txtTenGiangVien;
     GiangVien giangVien;
 
@@ -77,6 +78,14 @@ public class Dashboard extends AppCompatActivity {
             }
         });
 
+        btnNhapBaoCaoGD.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Dashboard.this, ChiTietBaoCaoHocPhan.class);
+                startActivity(intent);
+            }
+        });
+
         btnThoatTaiKhoan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -93,5 +102,6 @@ public class Dashboard extends AppCompatActivity {
         btnThoatTaiKhoan = findViewById(R.id.btnThoatTaiKhoan);
         btnBaoCaoHocPhan = findViewById(R.id.btnBaoCaoHocPhan);
         btnBaoCaoGiangDay = findViewById(R.id.btnBaoCaoGiangDay);
+        btnNhapBaoCaoGD = findViewById(R.id.btnNhapBaoCaoGD);
     }
 }

@@ -179,6 +179,22 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         return rowId != -1;
     }
 
+    public List<HocPhan> getAllHocPhan() {
+        SQLiteDatabase db = getReadableDatabase();
+        List<HocPhan> hocPhans = new ArrayList<>();
+        Cursor cursor = db.query(TABLE_HOC_PHAN,
+                new String[]{MA_HP_COLUMN, TEN_HP_COLUMN},
+                null, null, null, null, null);
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                hocPhans.add(new HocPhan(cursor.getString(0), cursor.getString(1)));
+            } while (cursor.moveToNext());
+            cursor.close();
+        }
+        db.close();
+        return hocPhans;
+    }
+
     // GiangVien
     public boolean insertGiangVien(GiangVien giangVien) {
         SQLiteDatabase db = getWritableDatabase();
