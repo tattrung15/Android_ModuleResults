@@ -18,25 +18,25 @@ import com.nhom11.R;
 import com.nhom11.chi_tiet_bao_cao_hoc_phan.CustomSpinner;
 import com.nhom11.database.MyDatabaseHelper;
 import com.nhom11.dto.BaoCaoGiangDayDTO;
-import com.nhom11.models.BaoCaoGiangDay;
 import com.nhom11.models.GiangVien;
 import com.nhom11.models.HocPhan;
 import com.nhom11.models.LopHoc;
 import com.nhom11.utils.CustomAlertDialog;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class BaoCaoGiangDayActivity extends AppCompatActivity {
 
     MaterialToolbar topAppBar;
-    ArrayList<BaoCaoGiangDayDTO> baoCaoGiangDayDTOs;
+    List<BaoCaoGiangDayDTO> baoCaoGiangDayDTOs;
     ArrayList<GiangVien> giangViens;
     ArrayList<HocPhan> hocPhans;
     ArrayList<LopHoc> lopHocs;
     EditText editSoGioTrenLop, editSiSo, editSoTietMotNgay;
     Button btnThem, btnSua;
     ListView listView;
-    ArrayAdapter<BaoCaoGiangDay> baoCaoGiangDayArrayAdapter;
+    BaoCaoGiangDayAdapter baoCaoGiangDayAdapter;
     Spinner spinnerGiangVien, spinnerHocPhan, spinnerTenLop, spinnerLoaiTietHoc;
     CustomSpinnerGiangVien customSpinnerGiangVien;
     CustomSpinnerLopHoc customSpinnerLopHoc;
@@ -53,7 +53,15 @@ public class BaoCaoGiangDayActivity extends AppCompatActivity {
 
         getWidgets();
         loadDataSpinner();
+        loadDataListView();
         setListeners();
+    }
+
+    private void loadDataListView() {
+        baoCaoGiangDayDTOs = databaseHelper.getAllBaoCaoGD();
+        baoCaoGiangDayAdapter = new BaoCaoGiangDayAdapter(this,
+                R.layout.item_listview_bao_cao_giang_day, baoCaoGiangDayDTOs);
+        listView.setAdapter(baoCaoGiangDayAdapter);
     }
 
     private void getWidgets() {

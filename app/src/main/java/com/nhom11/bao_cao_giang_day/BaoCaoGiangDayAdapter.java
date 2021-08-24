@@ -46,12 +46,14 @@ public class BaoCaoGiangDayAdapter extends ArrayAdapter<BaoCaoGiangDayDTO> {
             TextView txtSoTietMotNgay = convertView.findViewById(R.id.txtBCGD_SoTietMotNgay);
             TextView txtLoaiTietHoc = convertView.findViewById(R.id.txtBCGD_LoaiTietHoc);
 
+            String siSo = baoCaoGiangDayDTO.getSiSoThucTe() + "/" + baoCaoGiangDayDTO.getSiSoCoDinh();
+
             txtTenHocPhan.setText(baoCaoGiangDayDTO.getTenHocPhan());
             txtMaHocPhan.setText(baoCaoGiangDayDTO.getMaHocPhan());
             txtTenLop.setText(baoCaoGiangDayDTO.getTenLop());
             txtGiangVien.setText(baoCaoGiangDayDTO.getTenGiangVien());
             txtSoGioTrenLop.setText(String.valueOf(baoCaoGiangDayDTO.getSoGioTrenLop()));
-            txtSiSo.setText(String.valueOf(baoCaoGiangDayDTO.getSiSo()));
+            txtSiSo.setText(siSo);
             txtSoTietMotNgay.setText(String.valueOf(baoCaoGiangDayDTO.getSoTietMotNgay()));
             txtLoaiTietHoc.setText(baoCaoGiangDayDTO.getLoaiTiet());
         }
