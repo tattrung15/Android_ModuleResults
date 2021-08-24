@@ -10,7 +10,8 @@ public class BaoCaoGiangDayDTO {
     private int maLop;
     private String tenLop;
     private float soGioTrenLop;
-    private int siSo;
+    private int siSoThucTe;
+    private int siSoCoDinh;
     private int soTietMotNgay;
     private String loaiTiet;
 
@@ -19,8 +20,8 @@ public class BaoCaoGiangDayDTO {
 
     public BaoCaoGiangDayDTO(int maBaoCaoGiangDay, int maGiangVien, String tenGiangVien,
                              int maBaoCaoHocPhan, String maHocPhan, String tenHocPhan, int maLop,
-                             String tenLop, float soGioTrenLop, int siSo, int soTietMotNgay,
-                             String loaiTiet) {
+                             String tenLop, float soGioTrenLop, int siSoThucTe, int siSoCoDinh,
+                             int soTietMotNgay, String loaiTiet) {
         this.maBaoCaoGiangDay = maBaoCaoGiangDay;
         this.maGiangVien = maGiangVien;
         this.tenGiangVien = tenGiangVien;
@@ -30,7 +31,8 @@ public class BaoCaoGiangDayDTO {
         this.maLop = maLop;
         this.tenLop = tenLop;
         this.soGioTrenLop = soGioTrenLop;
-        this.siSo = siSo;
+        this.siSoThucTe = siSoThucTe;
+        this.siSoCoDinh = siSoCoDinh;
         this.soTietMotNgay = soTietMotNgay;
         this.loaiTiet = loaiTiet;
     }
@@ -107,12 +109,20 @@ public class BaoCaoGiangDayDTO {
         this.soGioTrenLop = soGioTrenLop;
     }
 
-    public int getSiSo() {
-        return siSo;
+    public int getSiSoThucTe() {
+        return siSoThucTe;
     }
 
-    public void setSiSo(int siSo) {
-        this.siSo = siSo;
+    public void setSiSoThucTe(int siSoThucTe) {
+        this.siSoThucTe = siSoThucTe;
+    }
+
+    public int getSiSoCoDinh() {
+        return siSoCoDinh;
+    }
+
+    public void setSiSoCoDinh(int siSoCoDinh) {
+        this.siSoCoDinh = siSoCoDinh;
     }
 
     public int getSoTietMotNgay() {
@@ -138,12 +148,13 @@ public class BaoCaoGiangDayDTO {
                 ", maGiangVien=" + maGiangVien +
                 ", tenGiangVien='" + tenGiangVien + '\'' +
                 ", maBaoCaoHocPhan=" + maBaoCaoHocPhan +
-                ", maHocPhan=" + maHocPhan +
+                ", maHocPhan='" + maHocPhan + '\'' +
                 ", tenHocPhan='" + tenHocPhan + '\'' +
                 ", maLop=" + maLop +
                 ", tenLop='" + tenLop + '\'' +
                 ", soGioTrenLop=" + soGioTrenLop +
-                ", siSo=" + siSo +
+                ", siSoThucTe=" + siSoThucTe +
+                ", siSoCoDinh=" + siSoCoDinh +
                 ", soTietMotNgay=" + soTietMotNgay +
                 ", loaiTiet='" + loaiTiet + '\'' +
                 '}';

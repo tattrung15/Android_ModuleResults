@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.nhom11.dto.BaoCaoGiangDayDTO;
 import com.nhom11.dto.BaoCaoHocPhanDTO;
 import com.nhom11.models.BaoCaoGiangDay;
 import com.nhom11.models.BaoCaoHocPhan;
@@ -424,5 +425,43 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         return new BaoCaoGiangDay(cursor.getInt(0), cursor.getInt(1), cursor.getInt(2),
                 cursor.getInt(3), cursor.getFloat(4), cursor.getInt(5), cursor.getInt(6),
                 cursor.getString(7));
+    }
+
+    public List<BaoCaoGiangDayDTO> getAllBaoCaoGD() {
+        SQLiteDatabase db = getReadableDatabase();
+        List<BaoCaoGiangDayDTO> baoCaoGiangDayDTOs = new ArrayList<>();
+        Cursor cursor = db.query(TABLE_BAO_CAO_HOC_PHAN + " , " + TABLE_HOC_PHAN + " , " +
+                        TABLE_BAO_CAO_GIANG_DAY + " , " + TABLE_GIANG_VIEN + " , " + TABLE_LOP_HOC,
+                new String[]{MA_BCGD_COLUMN, TABLE_GIANG_VIEN + "." + MA_GV_COLUMN, TEN_GV_COLUMN,
+                        TABLE_BAO_CAO_HOC_PHAN + "." + MA_BCHP_COLUMN,
+                        TABLE_HOC_PHAN + "." + MA_HP_COLUMN, TEN_HP_COLUMN,
+                        TABLE_LOP_HOC + "." + MA_LH_COLUMN, TEN_LH_COLUMN,
+                        SO_GIO_TREN_LOP_COLUMN, TABLE_BAO_CAO_GIANG_DAY + "." + SI_SO_COLUMN,
+                        TABLE_LOP_HOC + "." + SI_SO_COLUMN, SO_TIET_MOT_NGAY_COLUMN, LOAI_TIET_COLUMN},
+                TABLE_BAO_CAO_HOC_PHAN + "." + MA_HP_COLUMN +
+                        " = " + TABLE_HOC_PHAN + "." + MA_HP_COLUMN + " AND " +
+                        TABLE_BAO_CAO_GIANG_DAY + "." + MA_BCHP_COLUMN +
+                        " = " + TABLE_BAO_CAO_HOC_PHAN + "." + MA_BCHP_COLUMN + " AND " +
+                        TABLE_BAO_CAO_GIANG_DAY + "." + MA_GV_COLUMN +
+                        " = " + TABLE_GIANG_VIEN + "." + MA_GV_COLUMN + " AND " +
+                        TABLE_BAO_CAO_GIANG_DAY + "." + MA_LH_COLUMN +
+                        " = " + TABLE_LOP_HOC + "." + MA_LH_COLUMN,
+                null, null, null, null);
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                baoCaoGiangDayDTOs.add(new BaoCaoGiangDayDTO(cursor.getInt(0), cursor.getInt(1),
+                        cursor.getString(2), cursor.getInt(3), cursor.getString(4),
+                        cursor.getString(5), cursor.getInt(6), cursor.getString(7),
+                        cursor.getInt(8), cursor.getInt(9), cursor.getInt(10),
+                        cursor.getInt(11), cursor.getString(12)));
+            } while (cursor.moveToNext());
+            cursor.close();
+        }
+
+        if (ENV.compareTo("DEV") != 0) {
+            db.close();
+        }
+
+        return baoCaoGiangDayDTOs;
     }
 }
