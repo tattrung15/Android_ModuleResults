@@ -11,38 +11,49 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.nhom11.R;
-import com.nhom11.models.BaoCaoGiangDay;
+import com.nhom11.dto.BaoCaoGiangDayDTO;
 
-import java.util.ArrayList;
+import java.util.List;
 
-public class BaoCaoGiangDayAdapter extends ArrayAdapter {
+public class BaoCaoGiangDayAdapter extends ArrayAdapter<BaoCaoGiangDayDTO> {
 
-    Activity context = null;
+    Activity context;
     int layoutID;
-    ArrayList<BaoCaoGiangDay> list = null;
+    List<BaoCaoGiangDayDTO> list;
 
-    public BaoCaoGiangDayAdapter(@NonNull Activity context, int layoutID, @NonNull ArrayList<BaoCaoGiangDay> objects) {
-        super(context, layoutID, objects);
+    public BaoCaoGiangDayAdapter(Activity context, int layoutID, List<BaoCaoGiangDayDTO> list) {
+        super(context, layoutID, list);
         this.context = context;
         this.layoutID = layoutID;
-        this.list = objects;
+        this.list = list;
     }
 
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         LayoutInflater inflater = context.getLayoutInflater();
-        convertView = inflater.inflate(layoutID, null);
+        convertView = inflater.inflate(R.layout.item_listview_bao_cao_giang_day, null);
         if (list.size() > 0) {
 
-            final TextView txtTenLopBCGD = convertView.findViewById(R.id.txtTenLopBCGD);
-            final TextView txtSiSoBCGD = convertView.findViewById(R.id.txtSiSoBCGD);
-            final TextView txtSoTietBCGD = convertView.findViewById(R.id.txtSoTietBCGD);
+            BaoCaoGiangDayDTO baoCaoGiangDayDTO = list.get(position);
 
-            //Đổ dữ liệu tạm
-            txtTenLopBCGD.setText("KTPM2");
-            txtSiSoBCGD.setText("70");
-            txtSoTietBCGD.setText("5");
+            TextView txtTenHocPhan = convertView.findViewById(R.id.txtBCGD_TenHP);
+            TextView txtMaHocPhan = convertView.findViewById(R.id.txtBCGD_MaHP);
+            TextView txtTenLop = convertView.findViewById(R.id.txtBCGD_TenLop);
+            TextView txtGiangVien = convertView.findViewById(R.id.txtBCGD_GiangVien);
+            TextView txtSoGioTrenLop = convertView.findViewById(R.id.txtBCGD_SoGioTrenLop);
+            TextView txtSiSo = convertView.findViewById(R.id.txtBCGD_SiSo);
+            TextView txtSoTietMotNgay = convertView.findViewById(R.id.txtBCGD_SoTietMotNgay);
+            TextView txtLoaiTietHoc = convertView.findViewById(R.id.txtBCGD_LoaiTietHoc);
+
+            txtTenHocPhan.setText(baoCaoGiangDayDTO.getTenHocPhan());
+            txtMaHocPhan.setText(baoCaoGiangDayDTO.getMaHocPhan());
+            txtTenLop.setText(baoCaoGiangDayDTO.getTenLop());
+            txtGiangVien.setText(baoCaoGiangDayDTO.getTenGiangVien());
+            txtSoGioTrenLop.setText(String.valueOf(baoCaoGiangDayDTO.getSoGioTrenLop()));
+            txtSiSo.setText(String.valueOf(baoCaoGiangDayDTO.getSiSo()));
+            txtSoTietMotNgay.setText(String.valueOf(baoCaoGiangDayDTO.getSoTietMotNgay()));
+            txtLoaiTietHoc.setText(baoCaoGiangDayDTO.getLoaiTiet());
         }
         return convertView;
     }

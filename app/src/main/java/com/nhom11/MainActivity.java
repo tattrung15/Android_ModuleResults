@@ -93,11 +93,11 @@ public class MainActivity extends AppCompatActivity {
             databaseHelper.insertBaoCaoHocPhan(baoCaoHocPhan2);
 
             BaoCaoGiangDay baoCaoGiangDay1 = new BaoCaoGiangDay(1, 1,
-                    1, 1, 7, 8,
-                    8, "Lý thuyết");
+                    1, 1, 8,
+                    60, 5, "Lý thuyết");
             BaoCaoGiangDay baoCaoGiangDay2 = new BaoCaoGiangDay(2, 3,
-                    2, 3, 2, 5,
-                    8, "Lý thuyết");
+                    2, 3, 5,
+                    65, 4, "Lý thuyết");
             databaseHelper.insertBaoCaoGiangDay(baoCaoGiangDay1);
             databaseHelper.insertBaoCaoGiangDay(baoCaoGiangDay2);
         }

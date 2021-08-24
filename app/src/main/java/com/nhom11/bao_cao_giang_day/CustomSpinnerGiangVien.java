@@ -1,4 +1,4 @@
-package com.nhom11.chi_tiet_bao_cao_hoc_phan;
+package com.nhom11.bao_cao_giang_day;
 
 import android.app.Activity;
 import android.view.LayoutInflater;
@@ -12,20 +12,21 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.nhom11.R;
-import com.nhom11.models.HocPhan;
+import com.nhom11.models.GiangVien;
 
 import java.util.ArrayList;
 
-public class CustomSpinner extends ArrayAdapter<HocPhan> {
+public class CustomSpinnerGiangVien extends ArrayAdapter<GiangVien> {
+
     Activity context;
     int layoutID;
-    ArrayList<HocPhan> list;
+    ArrayList<GiangVien> list;
 
-    public CustomSpinner(@NonNull Activity context, int layoutID, @NonNull ArrayList<HocPhan> objects) {
-        super(context, layoutID, objects);
+    public CustomSpinnerGiangVien(@NonNull Activity context, int layoutID, @NonNull ArrayList<GiangVien> list) {
+        super(context, layoutID, list);
         this.context = context;
         this.layoutID = layoutID;
-        this.list = objects;
+        this.list = list;
     }
 
     @Override
@@ -36,11 +37,11 @@ public class CustomSpinner extends ArrayAdapter<HocPhan> {
         }
         if (list.size() > 0) {
 
-            TextView txtMaHP = convertView.findViewById(R.id.txtMaHP);
-            TextView txtTenHP = convertView.findViewById(R.id.txtTenHP);
+            TextView txtMaGiangVien = convertView.findViewById(R.id.txtMaHP);
+            TextView txtTenGiangVien = convertView.findViewById(R.id.txtTenHP);
 
-            txtMaHP.setText(list.get(position).getMaHocPhan());
-            txtTenHP.setText(list.get(position).getTenHocPhan());
+            txtMaGiangVien.setText(String.valueOf(list.get(position).getMaGiangVien()));
+            txtTenGiangVien.setText(list.get(position).getTenGiangVien());
         }
         return convertView;
     }
@@ -57,11 +58,11 @@ public class CustomSpinner extends ArrayAdapter<HocPhan> {
             LinearLayout customSpinnerBCHP = convertView.findViewById(R.id.customSpinnerBCHP);
             customSpinnerBCHP.setPadding(0, 0, 0, 0);
 
-            TextView txtMaHP = convertView.findViewById(R.id.txtMaHP);
-            TextView txtTenHP = convertView.findViewById(R.id.txtTenHP);
+            TextView txtMaGiangVien = convertView.findViewById(R.id.txtMaHP);
+            TextView txtTenGiangVien = convertView.findViewById(R.id.txtTenHP);
 
-            txtMaHP.setText(list.get(position).getMaHocPhan());
-            txtTenHP.setText(list.get(position).getTenHocPhan());
+            txtMaGiangVien.setText(String.valueOf(list.get(position).getMaGiangVien()));
+            txtTenGiangVien.setText(list.get(position).getTenGiangVien());
         }
         return convertView;
     }

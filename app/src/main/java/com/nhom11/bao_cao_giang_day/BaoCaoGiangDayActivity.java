@@ -1,122 +1,107 @@
 package com.nhom11.bao_cao_giang_day;
 
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.material.appbar.MaterialToolbar;
 import com.nhom11.R;
+import com.nhom11.chi_tiet_bao_cao_hoc_phan.CustomSpinner;
 import com.nhom11.database.MyDatabaseHelper;
+import com.nhom11.dto.BaoCaoGiangDayDTO;
 import com.nhom11.models.BaoCaoGiangDay;
+import com.nhom11.models.GiangVien;
+import com.nhom11.models.HocPhan;
+import com.nhom11.models.LopHoc;
 import com.nhom11.utils.CustomAlertDialog;
 
 import java.util.ArrayList;
 
 public class BaoCaoGiangDayActivity extends AppCompatActivity {
 
-    MaterialToolbar topAppBarBCGD;
-    ArrayList<BaoCaoGiangDay> baoCaoGiangDays;
-    BaoCaoGiangDay baoCaoGiangDay;
-    String arrGiangVien[] = {"Vũ Thị Dương", "Hà Mạnh Đào", "Nguyễn Mạnh Cường", "Đỗ Tuấn Sơn"};
-    String arrTenHocPhan[] = {"Android", "Java nâng cao", "ASP.NET", "PHP"};
-    String arrTenLop[] = {"KTPM1", "KTPM2", "KTPM3"};
-    String arrLoaiTietHoc[] = {"Lý thuyết", "Thực hành", "Kết hợp"};
-    EditText editTongLopBCGD, editSoGioBCGD, editSiSoBCGD, editSoTietMotNgayBCGD;
-    Button btnThemBCGD, btnSuaBCGD;
-    ListView lvBCGD;
-    ArrayAdapter<BaoCaoGiangDay> adapterBaoCaoGiangDay;
-    Spinner spinnerGiangVienBCGD, spinnerTenHocPhanBCGD, spinnerTenLopBCGD, spinnerLoaiTietHocBCGD;
+    MaterialToolbar topAppBar;
+    ArrayList<BaoCaoGiangDayDTO> baoCaoGiangDayDTOs;
+    ArrayList<GiangVien> giangViens;
+    ArrayList<HocPhan> hocPhans;
+    ArrayList<LopHoc> lopHocs;
+    EditText editSoGioTrenLop, editSiSo, editSoTietMotNgay;
+    Button btnThem, btnSua;
+    ListView listView;
+    ArrayAdapter<BaoCaoGiangDay> baoCaoGiangDayArrayAdapter;
+    Spinner spinnerGiangVien, spinnerHocPhan, spinnerTenLop, spinnerLoaiTietHoc;
+    CustomSpinnerGiangVien customSpinnerGiangVien;
+    CustomSpinnerLopHoc customSpinnerLopHoc;
+    CustomSpinner customSpinnerHocPhan;
 
-    MyDatabaseHelper sqLiteHelper;
+    MyDatabaseHelper databaseHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bao_cao_giang_day);
 
-        widgets();
-        loadData();
-        onProcess();
+        databaseHelper = new MyDatabaseHelper(getApplicationContext());
+
+        getWidgets();
+        loadDataSpinner();
+        setListeners();
     }
 
-    private void widgets() {
-        topAppBarBCGD = findViewById(R.id.topAppBarBCGD);
+    private void getWidgets() {
+        topAppBar = findViewById(R.id.topAppBarBCGD);
+        editSoGioTrenLop = findViewById(R.id.editSoGioTrenLopBCGD);
+        editSiSo = findViewById(R.id.editSiSoBCGD);
+        editSoTietMotNgay = findViewById(R.id.editSoTietMotNgayBCGD);
+        btnThem = findViewById(R.id.btnThemBCGD);
+        btnSua = findViewById(R.id.btnSuaBCGD);
+        listView = findViewById(R.id.lvBCGD);
 
-        editTongLopBCGD = findViewById(R.id.editTongLopBCGD);
-        editSoGioBCGD = findViewById(R.id.editSoGioBCGD);
-        editSiSoBCGD = findViewById(R.id.editSiSoBCGD);
-        editSoTietMotNgayBCGD = findViewById(R.id.editSoTietMotNgayBCGD);
-
-        btnThemBCGD = findViewById(R.id.btnThemBCGD);
-        btnSuaBCGD = findViewById(R.id.btnSuaBCGD);
-        lvBCGD = findViewById(R.id.lvBCGD);
-        spinnerGiangVienBCGD = findViewById(R.id.spinnerGiangVienBCGD);
-        spinnerTenHocPhanBCGD = findViewById(R.id.spinnerTenHocPhanBCGD);
-        spinnerTenLopBCGD = findViewById(R.id.spinnerTenLopBCGD);
-        spinnerLoaiTietHocBCGD = findViewById(R.id.spinnerLoaiTietHocBCGD);
-
-        baoCaoGiangDays = new ArrayList<>();
-
-        ArrayAdapter adapterGiangVien = new ArrayAdapter(this, R.layout.support_simple_spinner_dropdown_item, arrGiangVien);
-        ArrayAdapter adapterTenHocPhan = new ArrayAdapter(this, R.layout.support_simple_spinner_dropdown_item, arrTenHocPhan);
-        ArrayAdapter adapterTenLop = new ArrayAdapter(this, R.layout.support_simple_spinner_dropdown_item, arrTenLop);
-        ArrayAdapter adapterLoaiTietHoc = new ArrayAdapter(this, R.layout.support_simple_spinner_dropdown_item, arrLoaiTietHoc);
-        spinnerGiangVienBCGD.setAdapter(adapterGiangVien);
-        spinnerTenHocPhanBCGD.setAdapter(adapterTenHocPhan);
-        spinnerTenLopBCGD.setAdapter(adapterTenLop);
-        spinnerLoaiTietHocBCGD.setAdapter(adapterLoaiTietHoc);
+        spinnerGiangVien = findViewById(R.id.spinnerGiangVienBCGD);
+        spinnerHocPhan = findViewById(R.id.spinnerTenHocPhanBCGD);
+        spinnerTenLop = findViewById(R.id.spinnerTenLopBCGD);
+        spinnerLoaiTietHoc = findViewById(R.id.spinnerLoaiTietHocBCGD);
     }
 
-    public void loadData() {
-//        if (sqLiteHelper == null) {
-//            sqLiteHelper = MyDatabaseHelper.getInstance(BaoCaoGiangDayActivity.this);
-//        }
+    public void loadDataSpinner() {
+        giangViens = (ArrayList<GiangVien>) databaseHelper.getAllGiangVien();
+        customSpinnerGiangVien = new CustomSpinnerGiangVien(this,
+                R.layout.bao_cao_hp_custom_spinner, giangViens);
+        spinnerGiangVien.setAdapter(customSpinnerGiangVien);
 
-        if (baoCaoGiangDays.size() == 0) {
-            baoCaoGiangDays.add(new BaoCaoGiangDay(1, 2, 3, 4, 5, 3, 5, "Lý thuyết"));
-            baoCaoGiangDays.add(new BaoCaoGiangDay(2, 1, 3, 4, 5, 3, 5, "Thực hành"));
-            baoCaoGiangDays.add(new BaoCaoGiangDay(3, 4, 3, 4, 5, 3, 5, "Kết hợp"));
-            baoCaoGiangDays.add(new BaoCaoGiangDay(3, 4, 3, 4, 5, 3, 5, "Kết hợp"));
-            baoCaoGiangDays.add(new BaoCaoGiangDay(3, 4, 3, 4, 5, 3, 5, "Kết hợp"));
-            baoCaoGiangDays.add(new BaoCaoGiangDay(3, 4, 3, 4, 5, 3, 5, "Kết hợp"));
-            baoCaoGiangDays.add(new BaoCaoGiangDay(3, 4, 3, 4, 5, 3, 5, "Kết hợp"));
-            baoCaoGiangDays.add(new BaoCaoGiangDay(3, 4, 3, 4, 5, 3, 5, "Kết hợp"));
-            baoCaoGiangDays.add(new BaoCaoGiangDay(3, 4, 3, 4, 5, 3, 5, "Kết hợp"));
-            baoCaoGiangDays.add(new BaoCaoGiangDay(3, 4, 3, 4, 5, 3, 5, "Kết hợp"));
-            baoCaoGiangDays.add(new BaoCaoGiangDay(3, 4, 3, 4, 5, 3, 5, "Kết hợp"));
-            baoCaoGiangDays.add(new BaoCaoGiangDay(3, 4, 3, 4, 5, 3, 5, "Kết hợp"));
-            baoCaoGiangDays.add(new BaoCaoGiangDay(3, 4, 3, 4, 5, 3, 5, "Kết hợp"));
+        hocPhans = (ArrayList<HocPhan>) databaseHelper.getAllHocPhan();
+        customSpinnerHocPhan = new CustomSpinner(this,
+                R.layout.bao_cao_hp_custom_spinner, hocPhans);
+        spinnerHocPhan.setAdapter(customSpinnerHocPhan);
 
-//            for (int i = 0; i < baoCaoGiangDays.size(); i++) {
-//                BaoCaoGiangDay baoCaoGiangDay1 = baoCaoGiangDays.get(i);
-//                sqLiteHelper.insertBaoCaoGiangDay(baoCaoGiangDay1);
-//            }
-        }
+        lopHocs = (ArrayList<LopHoc>) databaseHelper.getAllLopHoc();
+        customSpinnerLopHoc = new CustomSpinnerLopHoc(this,
+                R.layout.bao_cao_hp_custom_spinner, lopHocs);
+        spinnerTenLop.setAdapter(customSpinnerLopHoc);
 
-        adapterBaoCaoGiangDay = new ArrayAdapter<BaoCaoGiangDay>(BaoCaoGiangDayActivity.this, R.layout.support_simple_spinner_dropdown_item, baoCaoGiangDays);
-        lvBCGD.setAdapter(adapterBaoCaoGiangDay);
-
+        ArrayList<String> loaiTietHocs = new ArrayList<>();
+        loaiTietHocs.add("Lý thuyết");
+        loaiTietHocs.add("Thực hành");
+        ArrayAdapter<String> loaiTietHocAdapter = new ArrayAdapter<>(this,
+                android.R.layout.simple_spinner_dropdown_item, loaiTietHocs);
+        spinnerLoaiTietHoc.setAdapter(loaiTietHocAdapter);
     }
 
 
-    private void onProcess() {
-        topAppBarBCGD.setNavigationOnClickListener(v -> {
+    private void setListeners() {
+        topAppBar.setNavigationOnClickListener(v -> {
             finish();
         });
 
-        topAppBarBCGD.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+        topAppBar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 if (item.getItemId() == R.id.optionMenuExit) {
@@ -128,45 +113,17 @@ public class BaoCaoGiangDayActivity extends AppCompatActivity {
             }
         });
 
-        btnThemBCGD.setOnClickListener(new View.OnClickListener() {
+        btnThem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //
             }
         });
 
-        btnSuaBCGD.setOnClickListener(new View.OnClickListener() {
+        btnSua.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //
-            }
-        });
-
-        lvBCGD.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                baoCaoGiangDay = baoCaoGiangDays.get(position);
-
-                AlertDialog alertDialog = new AlertDialog.Builder(BaoCaoGiangDayActivity.this)
-                        .setTitle("Thông báo")
-                        .setMessage("Bạn có chắc chắn muốn xóa không")
-                        .setPositiveButton("Có", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                //
-                                Toast.makeText(BaoCaoGiangDayActivity.this, "Xóa thành công", Toast.LENGTH_SHORT).show();
-                            }
-                        })
-                        .setNegativeButton("Không", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                Toast.makeText(BaoCaoGiangDayActivity.this, "Xóa không thành công", Toast.LENGTH_SHORT).show();
-                            }
-                        })
-                        .create();
-
-                alertDialog.show();
-                return false;
             }
         });
     }

@@ -15,10 +15,10 @@ import com.nhom11.dto.BaoCaoHocPhanDTO;
 
 import java.util.ArrayList;
 
-public class CustomListview extends ArrayAdapter {
-    Activity context = null;
+public class CustomListview extends ArrayAdapter<BaoCaoHocPhanDTO> {
+    Activity context;
     int layoutID;
-    ArrayList<BaoCaoHocPhanDTO> list = null;
+    ArrayList<BaoCaoHocPhanDTO> list;
 
     public CustomListview(@NonNull Activity context, int layoutID, @NonNull ArrayList<BaoCaoHocPhanDTO> objects) {
         super(context, layoutID, objects);
@@ -38,7 +38,7 @@ public class CustomListview extends ArrayAdapter {
             TextView txtBCHP_TongSoLop = convertView.findViewById(R.id.txtBCHP_TongSoLop);
             TextView txtBCHP_TongSoGio = convertView.findViewById(R.id.txtBCHP_TongSoGio);
             TextView txtBCHP_LoaiHP = convertView.findViewById(R.id.txtBCHP_LoaiHP);
-            //lấy bản ghi thứ position gán cho thành phần tương ứng
+
             txtBCHP_MaHP.setText(list.get(position).getMaHocPhan());
             txtBCHP_TenHP.setText(list.get(position).getTenHocPhan());
             txtBCHP_TongSoLop.setText(String.valueOf(list.get(position).getTongSoLop()));

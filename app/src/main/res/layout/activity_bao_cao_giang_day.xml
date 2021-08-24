@@ -37,7 +37,6 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/tv1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -50,10 +49,10 @@
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:weightSum="2">
+            android:layout_marginVertical="15dp"
+            android:weightSum="3">
 
             <TextView
-                android:id="@+id/tv2"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -65,16 +64,17 @@
                 android:id="@+id/spinnerGiangVienBCGD"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_weight="2" />
         </TableRow>
 
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:weightSum="2">
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="15dp"
+            android:weightSum="3">
 
             <TextView
-                android:id="@+id/tv3"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -86,7 +86,7 @@
                 android:id="@+id/spinnerTenHocPhanBCGD"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_weight="2" />
         </TableRow>
 
         <LinearLayout
@@ -95,56 +95,23 @@
             android:orientation="horizontal"
             android:weightSum="2">
 
-            <TableRow
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="20dp"
-                android:layout_weight="1"
-                android:weightSum="3">
-
-                <TextView
-                    android:id="@+id/tv4"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:text="Tổng số lớp:"
-                    android:textColor="@color/black"
-                    android:textSize="16sp" />
-
-                <EditText
-                    android:id="@+id/editTongLopBCGD"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:ems="10"
-                    android:textColor="@color/black"
-                    android:textSize="16sp" />
-            </TableRow>
-
-            <TableRow
+            <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:weightSum="3">
+                android:text="Số giờ trên lớp:"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
 
-                <TextView
-                    android:id="@+id/tv5"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:text="Số giờ/lớp:"
-                    android:textColor="@color/black"
-                    android:textSize="16sp" />
-
-                <EditText
-                    android:id="@+id/editSoGioBCGD"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:ems="10"
-                    android:textColor="@color/black"
-                    android:textSize="16sp" />
-            </TableRow>
+            <EditText
+                android:id="@+id/editSoGioTrenLopBCGD"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:inputType="numberDecimal"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
         </LinearLayout>
 
 
@@ -153,7 +120,6 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -167,15 +133,15 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginVertical="15dp"
             android:orientation="horizontal"
             android:weightSum="5">
 
             <TextView
-                android:id="@+id/tv7"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:text="Tên lớp:"
+                android:text="Lớp học:"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
 
@@ -189,11 +155,12 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="15dp"
             android:orientation="horizontal"
             android:weightSum="5">
 
             <TextView
-                android:id="@+id/tv9"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
@@ -212,19 +179,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:weightSum="2">
+            android:weightSum="3">
 
             <TableRow
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="20dp"
+                android:layout_marginEnd="10dp"
                 android:layout_weight="1"
-                android:weightSum="3">
+                android:weightSum="2">
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="2"
+                    android:layout_weight="1"
                     android:text="Sĩ số:"
                     android:textColor="@color/black"
                     android:textSize="16sp" />
@@ -235,6 +202,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:ems="10"
+                    android:inputType="number"
                     android:textColor="@color/black"
                     android:textSize="16sp" />
             </TableRow>
@@ -242,7 +210,7 @@
             <TableRow
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="2"
                 android:weightSum="3">
 
                 <TextView
@@ -259,6 +227,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:ems="10"
+                    android:inputType="number"
                     android:textColor="@color/black"
                     android:textSize="16sp" />
             </TableRow>
