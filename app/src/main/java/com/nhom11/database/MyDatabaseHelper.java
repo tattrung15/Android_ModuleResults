@@ -51,14 +51,14 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
 
     // BaoCaoHocPhan
     private static final String MA_BCHP_COLUMN = "MaBaoCaoHocPhan";
-    private static final String TONG_SO_LOP_BCHP_COLUMN = "TongSoLopBCHP";
-    private static final String TONG_SO_GIO_BCHP_COLUMN = "TongSoGioBCHP";
+    private static final String TONG_SO_LOP_BCHP_COLUMN = "TongSoLop";
+    private static final String TONG_SO_GIO_BCHP_COLUMN = "TongSoGio";
     private static final String LOAI_HP_COLUMN = "LoaiHocPhan";
 
     // BaoCaoGiangDay
     private static final String MA_BCGD_COLUMN = "MaBaoCaoGiangDay";
-    private static final String TONG_SO_LOP_BCGD_COLUMN = "TongSoLopBCGD";
-    private static final String TONG_SO_GIO_BCGD_COLUMN = "TongSoGioBCGD";
+    private static final String SO_GIO_TREN_LOP_COLUMN = "SoGioTrenLop";
+    private static final String SI_SO_BCGD_COLUMN = "SiSo";
     private static final String SO_TIET_MOT_NGAY_COLUMN = "SoTietMotNgay";
     private static final String LOAI_TIET_COLUMN = "LoaiTiet";
 
@@ -99,9 +99,9 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
                     MA_BCGD_COLUMN + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
                     MA_GV_COLUMN + " INTEGER NOT NULL," +
                     MA_BCHP_COLUMN + " INTEGER NOT NULL," +
-                    MA_LH_COLUMN + " INTEGER UNIQUE," +
-                    TONG_SO_LOP_BCGD_COLUMN + " INTEGER NOT NULL," +
-                    TONG_SO_GIO_BCGD_COLUMN + " REAL NOT NULL," +
+                    MA_LH_COLUMN + " INTEGER NOT NULL," +
+                    SO_GIO_TREN_LOP_COLUMN + " REAL NOT NULL," +
+                    SI_SO_BCGD_COLUMN + " INTEGER NOT NULL," +
                     SO_TIET_MOT_NGAY_COLUMN + " INTEGER NOT NULL," +
                     LOAI_TIET_COLUMN + " TEXT NOT NULL," +
                     "FOREIGN KEY(" + MA_LH_COLUMN + ")REFERENCES " +
@@ -249,6 +249,27 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         return giangVien;
     }
 
+    public List<GiangVien> getAllGiangVien() {
+        SQLiteDatabase db = getReadableDatabase();
+        List<GiangVien> giangViens = new ArrayList<>();
+        Cursor cursor = db.query(TABLE_GIANG_VIEN,
+                new String[]{MA_GV_COLUMN, TEN_GV_COLUMN, USERNAME_COLUMN, PASSWORD_COLUMN},
+                null, null, null, null, null);
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                giangViens.add(new GiangVien(cursor.getInt(0), cursor.getString(1),
+                        cursor.getString(2), cursor.getString(3)));
+            } while (cursor.moveToNext());
+            cursor.close();
+        }
+
+        if (ENV.compareTo("DEV") != 0) {
+            db.close();
+        }
+
+        return giangViens;
+    }
+
     // LopHoc
     public LopHoc insertLopHoc(LopHoc lopHoc) {
         SQLiteDatabase db = getWritableDatabase();
@@ -271,6 +292,26 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         cursor.moveToLast();
 
         return new LopHoc(cursor.getInt(0), cursor.getString(1), cursor.getInt(2));
+    }
+
+    public List<LopHoc> getAllLopHoc() {
+        SQLiteDatabase db = getReadableDatabase();
+        List<LopHoc> lopHocs = new ArrayList<>();
+        Cursor cursor = db.query(TABLE_LOP_HOC,
+                new String[]{MA_LH_COLUMN, TEN_LH_COLUMN, SI_SO_COLUMN},
+                null, null, null, null, null);
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                lopHocs.add(new LopHoc(cursor.getInt(0), cursor.getString(1), cursor.getInt(2)));
+            } while (cursor.moveToNext());
+            cursor.close();
+        }
+
+        if (ENV.compareTo("DEV") != 0) {
+            db.close();
+        }
+
+        return lopHocs;
     }
 
     // BaoCaoHocPhan
@@ -361,8 +402,8 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         values.put(MA_GV_COLUMN, baoCaoGiangDay.getMaGiangVien());
         values.put(MA_BCHP_COLUMN, baoCaoGiangDay.getMaBaoCaoHocPhan());
         values.put(MA_LH_COLUMN, baoCaoGiangDay.getMaLop());
-        values.put(TONG_SO_LOP_BCGD_COLUMN, baoCaoGiangDay.getTongSoLop());
-        values.put(TONG_SO_GIO_BCGD_COLUMN, baoCaoGiangDay.getTongSoGio());
+        values.put(SO_GIO_TREN_LOP_COLUMN, baoCaoGiangDay.getSoGioTrenLop());
+        values.put(SI_SO_BCGD_COLUMN, baoCaoGiangDay.getSiSo());
         values.put(SO_TIET_MOT_NGAY_COLUMN, baoCaoGiangDay.getSoTietMotNgay());
         values.put(LOAI_TIET_COLUMN, baoCaoGiangDay.getLoaiTiet());
         long rowId = db.insert(TABLE_BAO_CAO_GIANG_DAY, null, values);
@@ -381,7 +422,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         cursor.moveToLast();
 
         return new BaoCaoGiangDay(cursor.getInt(0), cursor.getInt(1), cursor.getInt(2),
-                cursor.getInt(3), cursor.getInt(4), cursor.getFloat(5), cursor.getInt(6),
+                cursor.getInt(3), cursor.getFloat(4), cursor.getInt(5), cursor.getInt(6),
                 cursor.getString(7));
     }
 }
