@@ -385,7 +385,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     }
 
     public int deleteBaoCaoHocPhan(int maBaoCaoHocPhan) {
-        SQLiteDatabase db = getReadableDatabase();
+        SQLiteDatabase db = getWritableDatabase();
         int rowEffect = db.delete(TABLE_BAO_CAO_HOC_PHAN, MA_BCHP_COLUMN + " = ?", new
                 String[]{String.valueOf(maBaoCaoHocPhan)});
 
@@ -463,5 +463,45 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         }
 
         return baoCaoGiangDayDTOs;
+    }
+
+    public int deleteBaoCaoGiangDay(int maBaoCaoGiangDay) {
+        SQLiteDatabase db = getWritableDatabase();
+        int rowEffect = db.delete(TABLE_BAO_CAO_GIANG_DAY, MA_BCGD_COLUMN + " = ?", new
+                String[]{String.valueOf(maBaoCaoGiangDay)});
+
+        if (ENV.compareTo("DEV") != 0) {
+            db.close();
+        }
+
+        return rowEffect;
+    }
+
+    public boolean checkExistsBCGD(int maBCHP, int maGiangVien, int maLopHoc) {
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.query(TABLE_BAO_CAO_HOC_PHAN + " , " + TABLE_BAO_CAO_GIANG_DAY +
+                        " , " + TABLE_GIANG_VIEN + " , " + TABLE_LOP_HOC,
+                new String[]{MA_BCGD_COLUMN, TABLE_GIANG_VIEN + "." + MA_GV_COLUMN, TEN_GV_COLUMN,
+                        TABLE_BAO_CAO_HOC_PHAN + "." + MA_BCHP_COLUMN,
+                        TABLE_LOP_HOC + "." + MA_LH_COLUMN, TEN_LH_COLUMN,
+                        SO_GIO_TREN_LOP_COLUMN, TABLE_BAO_CAO_GIANG_DAY + "." + SI_SO_COLUMN,
+                        TABLE_LOP_HOC + "." + SI_SO_COLUMN, SO_TIET_MOT_NGAY_COLUMN, LOAI_TIET_COLUMN},
+                TABLE_BAO_CAO_GIANG_DAY + "." + MA_BCHP_COLUMN +
+                        " = " + TABLE_BAO_CAO_HOC_PHAN + "." + MA_BCHP_COLUMN + " AND " +
+                        TABLE_BAO_CAO_GIANG_DAY + "." + MA_GV_COLUMN +
+                        " = " + TABLE_GIANG_VIEN + "." + MA_GV_COLUMN + " AND " +
+                        TABLE_BAO_CAO_GIANG_DAY + "." + MA_LH_COLUMN +
+                        " = " + TABLE_LOP_HOC + "." + MA_LH_COLUMN + " AND " +
+                        TABLE_BAO_CAO_GIANG_DAY + "." + MA_BCHP_COLUMN + " = ?" + " AND " +
+                        TABLE_BAO_CAO_GIANG_DAY + "." + MA_GV_COLUMN + " = ?" + " AND " +
+                        TABLE_BAO_CAO_GIANG_DAY + "." + MA_LH_COLUMN + " = ?",
+                new String[]{String.valueOf(maBCHP), String.valueOf(maGiangVien), String.valueOf(maLopHoc)},
+                null, null, null);
+
+        if (ENV.compareTo("DEV") != 0) {
+            db.close();
+        }
+
+        return cursor != null && cursor.moveToFirst();
     }
 }
