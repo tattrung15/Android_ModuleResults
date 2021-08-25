@@ -167,12 +167,6 @@ public class ChiTietBaoCaoHocPhan extends AppCompatActivity {
                 int tongSoLop = Integer.parseInt(editBCHPTongLop.getText().toString());
                 float tongSoGio = Float.parseFloat(editBCHPSoGio.getText().toString());
 
-                if (tongSoLop <= 0 || tongSoGio <= 0) {
-                    Toast.makeText(getBaseContext(), "Dữ liệu không hợp lệ",
-                            Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
                 int increaseId = databaseHelper.getLastId(MyDatabaseHelper.TABLE_BAO_CAO_HOC_PHAN) + 1;
                 HocPhan hocPhan = (HocPhan) spinnerHP.getSelectedItem();
                 BaoCaoHocPhan baoCaoHocPhan = new BaoCaoHocPhan(increaseId, hocPhan.getMaHocPhan(),
