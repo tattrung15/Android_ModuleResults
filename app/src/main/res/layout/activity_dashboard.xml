@@ -103,7 +103,7 @@
         </LinearLayout>
 
         <Button
-            android:id="@+id/btnBaoCaoHocPhan"
+            android:id="@+id/btnDSBaoCaoHocPhan"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/cardProfile"
@@ -116,15 +116,15 @@
 
 
         <Button
-            android:id="@+id/btnNhapBaoCaoGD"
+            android:id="@+id/btnBaoCaoHocPhan"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/btnBaoCaoHocPhan"
+            android:layout_below="@+id/btnDSBaoCaoHocPhan"
             android:layout_centerHorizontal="true"
             android:layout_marginHorizontal="20dp"
             android:layout_marginTop="30dp"
             android:background="@drawable/custom_btn_dashboard"
-            android:text="Nhập báo cáo học phần"
+            android:text="Báo cáo học phần"
             android:textColor="@color/white" />
 
 
@@ -132,7 +132,7 @@
             android:id="@+id/btnBaoCaoGiangDay"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/btnNhapBaoCaoGD"
+            android:layout_below="@+id/btnBaoCaoHocPhan"
             android:layout_centerHorizontal="true"
             android:layout_marginHorizontal="20dp"
             android:layout_marginTop="30dp"

@@ -36,16 +36,19 @@ public class BaoCaoGiangDayActivity extends AppCompatActivity {
     ArrayList<GiangVien> giangViens;
     ArrayList<BaoCaoHocPhanDTO> baoCaoHocPhanDTOs;
     ArrayList<LopHoc> lopHocs;
+    ArrayList<String> loaiTietHocs;
     EditText editSoGioTrenLop, editSiSo, editSoTietMotNgay;
     Button btnThem, btnSua;
     ListView listView;
     BaoCaoGiangDayAdapter baoCaoGiangDayAdapter;
-    Spinner spinnerGiangVien, spinnerHocPhan, spinnerTenLop, spinnerLoaiTietHoc;
+    Spinner spinnerGiangVien, spinnerHocPhan, spinnerLopHoc, spinnerLoaiTietHoc;
     CustomSpinnerGiangVien customSpinnerGiangVien;
     CustomSpinnerLopHoc customSpinnerLopHoc;
     CustomSpinnerHocPhan customSpinnerHocPhan;
 
     MyDatabaseHelper databaseHelper;
+
+    BaoCaoGiangDayDTO baoCaoGiangDayDTO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +81,7 @@ public class BaoCaoGiangDayActivity extends AppCompatActivity {
 
         spinnerGiangVien = findViewById(R.id.spinnerGiangVienBCGD);
         spinnerHocPhan = findViewById(R.id.spinnerTenHocPhanBCGD);
-        spinnerTenLop = findViewById(R.id.spinnerTenLopBCGD);
+        spinnerLopHoc = findViewById(R.id.spinnerTenLopBCGD);
         spinnerLoaiTietHoc = findViewById(R.id.spinnerLoaiTietHocBCGD);
     }
 
@@ -96,9 +99,9 @@ public class BaoCaoGiangDayActivity extends AppCompatActivity {
         lopHocs = (ArrayList<LopHoc>) databaseHelper.getAllLopHoc();
         customSpinnerLopHoc = new CustomSpinnerLopHoc(this,
                 R.layout.bao_cao_hp_custom_spinner, lopHocs);
-        spinnerTenLop.setAdapter(customSpinnerLopHoc);
+        spinnerLopHoc.setAdapter(customSpinnerLopHoc);
 
-        ArrayList<String> loaiTietHocs = new ArrayList<>();
+        loaiTietHocs = new ArrayList<>();
         loaiTietHocs.add("Lý thuyết");
         loaiTietHocs.add("Thực hành");
         ArrayAdapter<String> loaiTietHocAdapter = new ArrayAdapter<>(this,
@@ -149,9 +152,9 @@ public class BaoCaoGiangDayActivity extends AppCompatActivity {
                 int siSo = Integer.parseInt(editSiSo.getText().toString());
                 int soTietMotNgay = Integer.parseInt(editSoTietMotNgay.getText().toString());
 
-                LopHoc lopHoc = (LopHoc) spinnerTenLop.getSelectedItem();
+                LopHoc lopHoc = (LopHoc) spinnerLopHoc.getSelectedItem();
                 if (lopHoc.getSiSo() < siSo) {
-                    Toast.makeText(getBaseContext(), "Sĩ số không quá " + lopHoc.getSiSo(),
+                    Toast.makeText(getBaseContext(), "Sĩ số không vượt quá " + lopHoc.getSiSo(),
                             Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -200,7 +203,125 @@ public class BaoCaoGiangDayActivity extends AppCompatActivity {
         btnSua.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //
+                if (editSoGioTrenLop.getText().toString().compareTo("") == 0) {
+                    Toast.makeText(getBaseContext(), "Số giờ trên lớp không hợp lệ",
+                            Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (editSiSo.getText().toString().compareTo("") == 0) {
+                    Toast.makeText(getBaseContext(), "Sĩ số không hợp lệ",
+                            Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (editSoTietMotNgay.getText().toString().compareTo("") == 0) {
+                    Toast.makeText(getBaseContext(), "Số tiết một ngày không hợp lệ",
+                            Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                float soGioTrenLop = Float.parseFloat(editSoGioTrenLop.getText().toString());
+                int siSo = Integer.parseInt(editSiSo.getText().toString());
+                int soTietMotNgay = Integer.parseInt(editSoTietMotNgay.getText().toString());
+
+                LopHoc lopHoc = (LopHoc) spinnerLopHoc.getSelectedItem();
+                if (lopHoc.getSiSo() < siSo) {
+                    Toast.makeText(getBaseContext(), "Sĩ số không vượt quá " + lopHoc.getSiSo(),
+                            Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                GiangVien giangVien = (GiangVien) spinnerGiangVien.getSelectedItem();
+                BaoCaoHocPhanDTO baoCaoHocPhanDTO = (BaoCaoHocPhanDTO) spinnerHocPhan.getSelectedItem();
+
+                if (baoCaoGiangDayDTO.getMaGiangVien() != giangVien.getMaGiangVien() ||
+                        baoCaoGiangDayDTO.getMaHocPhan().compareTo(baoCaoHocPhanDTO.getMaHocPhan()) != 0 ||
+                        baoCaoGiangDayDTO.getMaLop() != lopHoc.getMaLop()) {
+                    if (databaseHelper.checkExistsBCGD(baoCaoHocPhanDTO.getMaBaoCaoHocPhan(),
+                            giangVien.getMaGiangVien(), lopHoc.getMaLop())) {
+                        AlertDialog alertDialogExists = CustomAlertDialog.buildAlertDialogExists(BaoCaoGiangDayActivity.this);
+                        alertDialogExists.show();
+                        return;
+                    }
+                }
+
+                baoCaoGiangDayDTO.setMaBaoCaoHocPhan(baoCaoHocPhanDTO.getMaBaoCaoHocPhan());
+                baoCaoGiangDayDTO.setMaGiangVien(giangVien.getMaGiangVien());
+                baoCaoGiangDayDTO.setMaHocPhan(baoCaoHocPhanDTO.getMaHocPhan());
+                baoCaoGiangDayDTO.setMaLop(lopHoc.getMaLop());
+                baoCaoGiangDayDTO.setTenGiangVien(giangVien.getTenGiangVien());
+                baoCaoGiangDayDTO.setTenHocPhan(baoCaoHocPhanDTO.getTenHocPhan());
+                baoCaoGiangDayDTO.setTenLop(lopHoc.getTenLop());
+                baoCaoGiangDayDTO.setSoGioTrenLop(soGioTrenLop);
+                baoCaoGiangDayDTO.setSiSoThucTe(siSo);
+                baoCaoGiangDayDTO.setSiSoCoDinh(lopHoc.getSiSo());
+                baoCaoGiangDayDTO.setSoTietMotNgay(soTietMotNgay);
+                baoCaoGiangDayDTO.setLoaiTiet(spinnerLoaiTietHoc.getSelectedItem().toString());
+
+                BaoCaoGiangDay baoCaoGiangDay = new BaoCaoGiangDay(baoCaoGiangDayDTO.getMaBaoCaoGiangDay(),
+                        baoCaoGiangDayDTO.getMaGiangVien(), baoCaoGiangDayDTO.getMaBaoCaoHocPhan(),
+                        baoCaoGiangDayDTO.getMaLop(), baoCaoGiangDayDTO.getSoGioTrenLop(),
+                        baoCaoGiangDayDTO.getSiSoThucTe(), baoCaoGiangDayDTO.getSoTietMotNgay(),
+                        baoCaoGiangDayDTO.getLoaiTiet());
+
+                int rowEffect = databaseHelper.updateBaoCaoGiangDay(baoCaoGiangDay);
+                if (rowEffect >= 0) {
+                    Toast.makeText(getApplicationContext(), "Cập nhập thành công",
+                            Toast.LENGTH_SHORT).show();
+                    baoCaoGiangDayAdapter.notifyDataSetChanged();
+                } else {
+                    Toast.makeText(getApplicationContext(), "Cập nhập thất bại",
+                            Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                baoCaoGiangDayDTO = baoCaoGiangDayDTOs.get(i);
+
+                int positionSpinnerGV = 0;
+                for (int j = 0; j < giangViens.size(); j++) {
+                    if (giangViens.get(j).getMaGiangVien().compareTo(baoCaoGiangDayDTO.getMaGiangVien()) == 0) {
+                        positionSpinnerGV = j;
+                        break;
+                    }
+                }
+                spinnerGiangVien.setSelection(positionSpinnerGV);
+
+                int positionSpinnerHP = 0;
+                for (int j = 0; j < baoCaoHocPhanDTOs.size(); j++) {
+                    if (baoCaoHocPhanDTOs.get(j).getMaHocPhan()
+                            .compareTo(baoCaoGiangDayDTO.getMaHocPhan()) == 0) {
+                        positionSpinnerHP = j;
+                        break;
+                    }
+                }
+                spinnerHocPhan.setSelection(positionSpinnerHP);
+
+                int positionSpinnerLH = 0;
+                for (int j = 0; j < lopHocs.size(); j++) {
+                    if (lopHocs.get(j).getMaLop() == baoCaoGiangDayDTO.getMaLop()) {
+                        positionSpinnerLH = j;
+                        break;
+                    }
+                }
+                spinnerLopHoc.setSelection(positionSpinnerLH);
+
+                int positionSpinnerLTH = 0;
+                for (int j = 0; j < loaiTietHocs.size(); j++) {
+                    if (loaiTietHocs.get(j).compareTo(baoCaoGiangDayDTO.getLoaiTiet()) == 0) {
+                        positionSpinnerLTH = j;
+                        break;
+                    }
+                }
+                spinnerLoaiTietHoc.setSelection(positionSpinnerLTH);
+
+                editSoGioTrenLop.setText(String.valueOf(baoCaoGiangDayDTO.getSoGioTrenLop()));
+                editSiSo.setText(String.valueOf(baoCaoGiangDayDTO.getSiSoThucTe()));
+                editSoTietMotNgay.setText(String.valueOf(baoCaoGiangDayDTO.getSoTietMotNgay()));
             }
         });
 
