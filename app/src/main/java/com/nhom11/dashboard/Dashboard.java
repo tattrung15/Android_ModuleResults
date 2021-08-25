@@ -23,7 +23,7 @@ public class Dashboard extends AppCompatActivity {
 
     MaterialToolbar topAppBarDashboard;
     MenuItem optionMenuExit;
-    Button btnThoatTaiKhoan, btnBaoCaoHocPhan, btnBaoCaoGiangDay, btnNhapBaoCaoGD;
+    Button btnThoatTaiKhoan, btnDSBaoCaoHocPhan, btnBaoCaoHocPhan, btnBaoCaoGiangDay;
     TextView txtMaGiangVien, txtTenGiangVien;
     GiangVien giangVien;
 
@@ -62,10 +62,18 @@ public class Dashboard extends AppCompatActivity {
             }
         });
 
-        btnBaoCaoHocPhan.setOnClickListener(new View.OnClickListener() {
+        btnDSBaoCaoHocPhan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(Dashboard.this, DSBaoCaoHocPhan.class);
+                startActivity(intent);
+            }
+        });
+
+        btnBaoCaoHocPhan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Dashboard.this, ChiTietBaoCaoHocPhan.class);
                 startActivity(intent);
             }
         });
@@ -74,14 +82,6 @@ public class Dashboard extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(Dashboard.this, BaoCaoGiangDayActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        btnNhapBaoCaoGD.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(Dashboard.this, ChiTietBaoCaoHocPhan.class);
                 startActivity(intent);
             }
         });
@@ -100,8 +100,8 @@ public class Dashboard extends AppCompatActivity {
         txtMaGiangVien = findViewById(R.id.txtMaGiangVien);
         txtTenGiangVien = findViewById(R.id.txtTenGiangVien);
         btnThoatTaiKhoan = findViewById(R.id.btnThoatTaiKhoan);
+        btnDSBaoCaoHocPhan = findViewById(R.id.btnDSBaoCaoHocPhan);
         btnBaoCaoHocPhan = findViewById(R.id.btnBaoCaoHocPhan);
         btnBaoCaoGiangDay = findViewById(R.id.btnBaoCaoGiangDay);
-        btnNhapBaoCaoGD = findViewById(R.id.btnNhapBaoCaoGD);
     }
 }

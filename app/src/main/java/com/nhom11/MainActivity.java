@@ -133,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
         if (databaseHelper.getTotalRecord(MyDatabaseHelper.TABLE_LOP_HOC) == 0) {
             LopHoc lopHoc1 = new LopHoc(1, "KTPM2", 80);
             LopHoc lopHoc2 = new LopHoc(2, "CNTT1", 75);
-            LopHoc lopHoc3 = new LopHoc(3, "HTTT", 78);
+            LopHoc lopHoc3 = new LopHoc(3, "HTTT3", 78);
             databaseHelper.insertLopHoc(lopHoc1);
             databaseHelper.insertLopHoc(lopHoc2);
             databaseHelper.insertLopHoc(lopHoc3);

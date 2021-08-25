@@ -465,6 +465,26 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         return baoCaoGiangDayDTOs;
     }
 
+    public int updateBaoCaoGiangDay(BaoCaoGiangDay baoCaoGiangDay) {
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(MA_GV_COLUMN, baoCaoGiangDay.getMaGiangVien());
+        values.put(MA_BCHP_COLUMN, baoCaoGiangDay.getMaBaoCaoHocPhan());
+        values.put(MA_LH_COLUMN, baoCaoGiangDay.getMaLop());
+        values.put(SO_GIO_TREN_LOP_COLUMN, baoCaoGiangDay.getSoGioTrenLop());
+        values.put(SI_SO_BCGD_COLUMN, baoCaoGiangDay.getSiSo());
+        values.put(SO_TIET_MOT_NGAY_COLUMN, baoCaoGiangDay.getSoTietMotNgay());
+        values.put(LOAI_TIET_COLUMN, baoCaoGiangDay.getLoaiTiet());
+        int rowEffect = db.update(TABLE_BAO_CAO_GIANG_DAY, values, MA_BCGD_COLUMN + " = ?",
+                new String[]{String.valueOf(baoCaoGiangDay.getMaBaoCaoGiangDay())});
+
+        if (ENV.compareTo("DEV") != 0) {
+            db.close();
+        }
+
+        return rowEffect;
+    }
+
     public int deleteBaoCaoGiangDay(int maBaoCaoGiangDay) {
         SQLiteDatabase db = getWritableDatabase();
         int rowEffect = db.delete(TABLE_BAO_CAO_GIANG_DAY, MA_BCGD_COLUMN + " = ?", new
