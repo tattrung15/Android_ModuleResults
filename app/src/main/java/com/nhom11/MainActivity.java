@@ -89,14 +89,14 @@ public class MainActivity extends AppCompatActivity {
                     5, 4, "Tự chọn");
             BaoCaoHocPhan baoCaoHocPhan2 = new BaoCaoHocPhan(1, "IT6030",
                     3, 8, "Tự chọn");
-            databaseHelper.insertBaoCaoHocPhan(baoCaoHocPhan1);
-            databaseHelper.insertBaoCaoHocPhan(baoCaoHocPhan2);
+            BaoCaoHocPhan baoCaoHocPhanNew1 = databaseHelper.insertBaoCaoHocPhan(baoCaoHocPhan1);
+            BaoCaoHocPhan baoCaoHocPhanNew2 = databaseHelper.insertBaoCaoHocPhan(baoCaoHocPhan2);
 
             BaoCaoGiangDay baoCaoGiangDay1 = new BaoCaoGiangDay(1, 1,
-                    1, 1, 8,
+                    baoCaoHocPhanNew1.getMaBaoCaoHocPhan(), 1, 8,
                     60, 5, "Lý thuyết");
             BaoCaoGiangDay baoCaoGiangDay2 = new BaoCaoGiangDay(2, 3,
-                    2, 3, 5,
+                    baoCaoHocPhanNew2.getMaBaoCaoHocPhan(), 3, 5,
                     65, 4, "Lý thuyết");
             databaseHelper.insertBaoCaoGiangDay(baoCaoGiangDay1);
             databaseHelper.insertBaoCaoGiangDay(baoCaoGiangDay2);
